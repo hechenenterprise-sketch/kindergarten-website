@@ -128,3 +128,51 @@
     @apply font-sans;
   }
 }
+.teacher-marquee {
+  width: 100%;
+  overflow: hidden;
+  padding: 12px 0 28px;
+}
+
+.teacher-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 24px;
+  animation: teacher-marquee-scroll 38s linear infinite;
+}
+
+.teacher-marquee:hover .teacher-marquee-track {
+  animation-play-state: paused;
+}
+
+.teacher-card {
+  width: 320px;
+  flex-shrink: 0;
+}
+
+@keyframes teacher-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - 12px));
+  }
+}
+
+@media (max-width: 768px) {
+  .teacher-marquee-track {
+    gap: 16px;
+    animation-duration: 30s;
+  }
+
+  .teacher-card {
+    width: 270px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .teacher-marquee-track {
+    animation: none;
+  }
+}
