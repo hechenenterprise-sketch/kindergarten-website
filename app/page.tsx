@@ -9,7 +9,13 @@ import {
 } from "lucide-react";
 
 import {client} from "@/sanity/lib/client";
-import {latestNewsQuery} from "@/sanity/lib/queries";
+import {
+  coursesQuery,
+  homeSettingsQuery,
+  latestNewsQuery,
+} from "@/sanity/lib/queries";
+
+import {urlFor} from "@/sanity/lib/image";
 
 type NewsItem = {
   _id: string;
@@ -17,6 +23,15 @@ type NewsItem = {
   slug?: string;
   publishedAt?: string;
   summary?: string;
+};
+
+type CourseItem = {
+  _id: string;
+  title: string;
+  age?: string;
+  description?: string;
+  image?: unknown;
+  order?: number;
 };
 
 const features = [
@@ -43,7 +58,20 @@ const features = [
 ];
 
 export default async function Home() {
-  const newsItems = await client.fetch<NewsItem[]>(latestNewsQuery);
+  const [newsItems, home, courses] = await Promise.all([
+  client
+    .fetch<NewsItem[]>(latestNewsQuery)
+    .catch(() => [] as NewsItem[]),
+
+  client
+    .fetch(homeSettingsQuery)
+    .catch(() => null),
+
+  client
+    .fetch<CourseItem[]>(coursesQuery)
+    .catch(() => [] as CourseItem[]),
+]);
+
   return (
     <main className="min-h-screen bg-[#fffdf8] text-slate-800">
       <header className="sticky top-0 z-50 border-b border-orange-100 bg-white/90 backdrop-blur">
@@ -115,12 +143,16 @@ export default async function Home() {
 
       <section className="relative min-h-[500px] overflow-hidden">
   <Image
-    src="/images/hero/hero-1.jpg"
-    alt="米堤爾幼兒園校園生活"
-    fill
-    priority
-    className="object-cover object-center"
-  />
+  src={
+    home?.heroImage
+      ? urlFor(home.heroImage).width(2000).url()
+      : "/images/hero/hero-1.jpg"
+  }
+  alt="米堤爾幼兒園"
+  fill
+  priority
+  className="object-cover"
+/>
 
   <div className="absolute inset-0 bg-gradient-to-r from-slate-950/75 via-slate-900/45 to-transparent" />
   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/45 via-transparent to-transparent" />
@@ -128,33 +160,34 @@ export default async function Home() {
   <div className="relative mx-auto flex min-h-[500px] max-w-7xl items-center px-5 py-16 lg:px-8">
     <div className="max-w-3xl text-white">
       <span className="inline-flex rounded-full border border-white/30 bg-white/15 px-5 py-2 text-sm font-semibold backdrop-blur-md">
-        米堤爾幼兒園｜Miter Kindergarten
-      </span>
+  {home?.eyebrow || "米堤爾幼兒園｜Miter Kindergarten"}
+</span>
 
       <h1 className="mt-7 text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-        陪伴孩子探索世界
+  {home?.title || "陪伴孩子探索世界"}
         <span className="mt-2 block text-pink-300">
-          快樂學習，自信成長
-        </span>
-      </h1>
+    {home?.highlightTitle || "快樂學習，自信成長"}
+  </span>
+</h1>
 
       <p className="mt-7 max-w-2xl text-base leading-8 text-white/85 sm:text-lg">
-        我們提供溫暖、安全且充滿創意的學習環境，陪伴每一位孩子探索興趣、建立自信，留下珍貴而快樂的童年回憶。
-      </p>
+  {home?.description ||
+    "我們提供溫暖、安全且充滿創意的學習環境，陪伴每一位孩子探索興趣、建立自信，留下珍貴而快樂的童年回憶。"}
+</p>
 
       <div className="mt-9 flex flex-wrap gap-4">
         <Link
           href="#contact"
-          className="inline-flex h-13 items-center justify-center rounded-full bg-[#df0873] px-8 text-base font-semibold text-white shadow-lg transition hover:-translate-y-1 hover:bg-[#c80767]"
+          className="inline-flex h-12 items-center justify-center rounded-full bg-[#df0873] px-8 text-base font-semibold text-white shadow-lg transition hover:-translate-y-1 hover:bg-[#c80767]"
         >
-          立即預約參觀
+          {home?.primaryButtonText || "立即預約參觀"}
         </Link>
 
         <Link
           href="#about"
-          className="inline-flex h-13 items-center justify-center rounded-full border border-white/50 bg-white/10 px-8 text-base font-semibold text-white backdrop-blur-md transition hover:bg-white hover:text-slate-900"
+          className="inline-flex h-12 items-center justify-center rounded-full border border-white/50 bg-white/10 px-8 text-base font-semibold text-white backdrop-blur-md transition hover:bg-white hover:text-slate-900"
         >
-          認識米堤爾
+          {home?.secondaryButtonText || "認識米堤爾"}
         </Link>
       </div>
 
@@ -342,96 +375,90 @@ export default async function Home() {
   </div>
 </section>
 
-<section id="courses"className="bg-[#fff9fc] py-24">
+<section id="courses" className="bg-[#fff9fc] py-20">
   <div className="mx-auto max-w-7xl px-5 lg:px-8">
-
     <div className="text-center">
       <p className="font-semibold tracking-widest text-[#df0873]">
         OUR COURSES
       </p>
 
-      <h2 className="mt-3 text-4xl font-bold">
+      <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
         多元課程設計
       </h2>
 
-      <p className="mx-auto mt-5 max-w-2xl leading-8 text-slate-600">
+      <p className="mx-auto mt-4 max-w-2xl leading-7 text-slate-600">
         依照不同年齡規劃適合孩子發展的學習內容，
         讓孩子在遊戲中學習，在探索中成長。
       </p>
     </div>
 
-    <div className="mt-14 grid grid-cols-2 gap-6 lg:grid-cols-4">
+    <div className="mt-10 grid grid-cols-2 gap-6 lg:grid-cols-4">
+      {courses.length > 0 ? (
+        courses.map((course, index) => {
+          const fallbackImages = [
+            "/images/hero/hero-1.jpg",
+            "/images/hero/hero-2.jpg",
+            "/images/hero/hero-3.jpg",
+            "/images/hero/hero-1.jpg",
+          ];
 
-      {[
-        {
-          title: "幼幼班",
-          age: "2-3歲",
-          image: "/images/hero/hero-1.jpg",
-          color: "bg-pink-100",
-        },
-        {
-          title: "小班",
-          age: "3-4歲",
-          image: "/images/hero/hero-2.jpg",
-          color: "bg-yellow-100",
-        },
-        {
-          title: "中班",
-          age: "4-5歲",
-          image: "/images/hero/hero-3.jpg",
-          color: "bg-green-100",
-        },
-        {
-          title: "大班",
-          age: "5-6歲",
-          image: "/images/hero/hero-1.jpg",
-          color: "bg-blue-100",
-        },
-      ].map((course) => (
+          const tagColors = [
+            "bg-pink-100",
+            "bg-yellow-100",
+            "bg-green-100",
+            "bg-blue-100",
+          ];
 
-        <article
-        key={course.title}
-  className="w-[260px] overflow-hidden rounded-[28px] bg-white shadow-lg transition duration-300 hover:-translate-y-2 hover:shadow-2xl"
->
-
-          <div className="relative h-48 overflow-hidden">
-
-            <Image
-              src={course.image}
-              alt={course.title}
-              fill
-              className="object-cover transition duration-500 hover:scale-110"
-            />
-
-          </div>
-
-          <div className="p-5">
-
-            <span
-              className={`rounded-full px-2.5 py-1 text-xs font-semibold ${course.color}`}
+          return (
+            <article
+              key={course._id}
+              className="overflow-hidden rounded-[28px] bg-white shadow-lg transition duration-300 hover:-translate-y-2 hover:shadow-2xl"
             >
-              {course.age}
-            </span>
+              <div className="relative h-48 overflow-hidden">
+                <Image
+                  src={
+                    course.image
+                      ? urlFor(course.image).width(900).height(600).url()
+                      : fallbackImages[index % fallbackImages.length]
+                  }
+                  alt={course.title}
+                  fill
+                  className="object-cover transition duration-500 hover:scale-110"
+                />
+              </div>
 
-            <h3 className="mt-4 text-xl font-bold">
-              {course.title}
-            </h3>
+              <div className="p-5">
+                <span
+                  className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
+                    tagColors[index % tagColors.length]
+                  }`}
+                >
+                  {course.age || "適齡課程"}
+                </span>
 
-            <p className="mt-3 text-sm leading-6 text-slate-600">
-  培養生活自理、
-  社交互動與快樂學習能力。
-</p>
+                <h3 className="mt-4 text-xl font-bold">
+                  {course.title}
+                </h3>
 
-          </div>
-
-        </article>
-
-      ))}
-
+                <p className="mt-3 text-sm leading-6 text-slate-600">
+                  {course.description ||
+                    "培養生活自理、社交互動與快樂學習能力。"}
+                </p>
+              </div>
+            </article>
+          );
+        })
+      ) : (
+        <div className="col-span-full rounded-3xl border border-dashed border-pink-200 bg-white p-10 text-center text-slate-500">
+          目前尚未建立課程內容
+        </div>
+      )}
+   
     </div>
-
+  
   </div>
 </section>
+  
 
       <section id="gallery" className="bg-white py-20">
         <div className="mx-auto max-w-7xl px-5 lg:px-8">

@@ -10,3 +10,25 @@ export const latestNewsQuery = defineQuery(`
     coverImage
   }
 `);
+export const homeSettingsQuery = `
+*[_type == "homeSettings"][0]{
+  heroImage,
+  eyebrow,
+  title,
+  highlightTitle,
+  description,
+  primaryButtonText,
+  secondaryButtonText
+}
+`;
+
+export const coursesQuery = `
+*[_type == "course"] | order(order asc){
+  _id,
+  title,
+  age,
+  description,
+  image,
+  order
+}
+`;
