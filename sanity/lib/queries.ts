@@ -1,5 +1,17 @@
 import {defineQuery} from "next-sanity";
 
+export const newsBySlugQuery = defineQuery(`
+*[_type=="news" && slug.current==$slug][0]{
+  _id,
+  title,
+  "slug": slug.current,
+  publishedAt,
+  summary,
+  coverImage,
+  content
+}
+`);
+
 export const latestNewsQuery = defineQuery(`
   *[_type == "news"] | order(publishedAt desc)[0...3] {
     _id,
@@ -10,6 +22,7 @@ export const latestNewsQuery = defineQuery(`
     coverImage
   }
 `);
+
 export const homeSettingsQuery = `
 *[_type == "homeSettings"][0]{
   heroImage,
@@ -30,5 +43,53 @@ export const coursesQuery = `
   description,
   image,
   order
+}
+`;
+
+export const teachersQuery = `
+*[_type=="teacher"] | order(order asc){
+  _id,
+  name,
+  title,
+  description,
+  image
+}
+`;
+
+export const galleryQuery = `
+*[_type=="gallery"] | order(order asc){
+  _id,
+  title,
+  description,
+  image,
+  order
+}
+`;
+
+export const contactSettingsQuery = `
+*[_type == "contactSettings"][0]{
+  address,
+  phone,
+  serviceHours,
+  lineUrl,
+  facebookUrl,
+  googleMapEmbedUrl,
+  description
+}
+`;
+
+export const aboutSettingsQuery = `
+*[_type == "aboutSettings"][0]{
+  image,
+  eyebrow,
+  title,
+  description1,
+  description2,
+  experienceYears,
+  experienceLabel,
+  feature1Title,
+  feature1Description,
+  feature2Title,
+  feature2Description
 }
 `;
