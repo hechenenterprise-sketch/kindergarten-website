@@ -5,6 +5,7 @@ import {client} from "@/sanity/lib/client";
 import {allNewsQuery} from "@/sanity/lib/queries";
 import {urlFor} from "@/sanity/lib/image";
 
+
 type NewsItem = {
   _id: string;
   title: string;
@@ -25,7 +26,7 @@ export default async function NewsListPage() {
         <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-5 lg:px-8">
           <Link href="/" className="flex items-center gap-3">
             <Image
-              src="/miter-logo.jpg"
+              src="/miter-logo.png"
               alt="米堤爾幼兒園"
               width={130}
               height={80}

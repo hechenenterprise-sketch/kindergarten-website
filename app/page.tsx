@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import MobileMenu from "../components/MobileMenu";
 import GalleryLightbox from "../components/GalleryLightbox";
+import BackToTop from "../components/BackToTop";
 
 import {client} from "@/sanity/lib/client";
 import {
@@ -97,15 +98,15 @@ export default async function Home() {
   return (
     <main className="min-h-screen bg-[#fffdf8] text-slate-800">
       <header className="sticky top-0 z-50 border-b border-orange-100 bg-white/90 backdrop-blur">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 lg:px-8">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:h-20 sm:px-5 lg:px-8">
           <Link href="/" className="flex items-center gap-3">
   <Image
-    src="/miter-logo.jpg"
+    src="/miter-logo.png"
     alt="米堤爾幼兒園 Miter Kindergarten"
     width={150}
     height={90}
     priority
-    className="h-14 w-auto object-contain"
+    className="h-10 w-auto object-contain sm:h-14"
   />
 
   <div className="hidden sm:block">
@@ -156,7 +157,7 @@ export default async function Home() {
         </div>
       </header>
 
-      <section className="relative min-h-[420px] overflow-hidden">
+      <section className="relative min-h-[390px] overflow-hidden sm:min-h-[420px]">
   <Image
   src={
     home?.heroImage
@@ -173,13 +174,11 @@ export default async function Home() {
   <div className="absolute inset-0 bg-gradient-to-r from-slate-950/75 via-slate-900/45 to-transparent" />
   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/45 via-transparent to-transparent" />
 
-  <div className="relative mx-auto flex min-h-[420px] max-w-7xl items-center px-5 py-12 lg:px-8">
+  <div className="relative mx-auto flex min-h-[390px] max-w-7xl items-center px-4 py-10 sm:min-h-[420px] sm:px-5 sm:py-12 lg:px-8">
     <div className="max-w-3xl text-white">
-      <span className="inline-flex rounded-full border border-white/30 bg-white/15 px-5 py-2 text-sm font-semibold backdrop-blur-md">
-  {home?.eyebrow || "米堤爾幼兒園｜Miter Kindergarten"}
-</span>
 
-      <h1 className="mt-6 text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+
+      <h1 className="mt-2 text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
   {home?.title || "陪伴孩子探索世界"}
         <span className="mt-2 block text-pink-300">
     {home?.highlightTitle || "快樂學習，自信成長"}
@@ -191,23 +190,23 @@ export default async function Home() {
     "我們提供溫暖、安全且充滿創意的學習環境，陪伴每一位孩子探索興趣、建立自信，留下珍貴而快樂的童年回憶。"}
 </p>
 
-      <div className="mt-9 flex flex-wrap gap-4">
+      <div className="mt-7 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:gap-4">
         <Link
           href="#contact"
-          className="inline-flex h-11 items-center justify-center rounded-full bg-[#df0873] px-8 text-base font-semibold text-white shadow-lg transition hover:-translate-y-1 hover:bg-[#c80767]"
+          className="inline-flex h-11 w-full items-center justify-center rounded-full bg-[#df0873] px-8 text-base font-semibold text-white shadow-lg transition hover:-translate-y-1 hover:bg-[#c80767] sm:w-auto"
         >
           {home?.primaryButtonText || "立即預約參觀"}
         </Link>
 
         <Link
           href="#about"
-          className="inline-flex h-11 items-center justify-center rounded-full border border-white/50 bg-white/10 px-8 text-base font-semibold text-white backdrop-blur-md transition hover:bg-white hover:text-slate-900"
+          className="inline-flex h-11 w-full items-center justify-center rounded-full border border-white/50 bg-white/10 px-8 text-base font-semibold text-white backdrop-blur-md transition hover:bg-white hover:text-slate-900 sm:w-auto"
         >
           {home?.secondaryButtonText || "認識米堤爾"}
         </Link>
       </div>
 
-      <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 text-sm text-white/85">
+      <div className="mt-7 flex flex-wrap gap-x-4 gap-y-2 text-xs text-white/85 sm:mt-10 sm:gap-x-7 sm:gap-y-3 sm:text-sm">
         <span>✓ 合法立案幼兒園</span>
         <span>✓ 專業幼教師資</span>
         <span>✓ 安全學習環境</span>
@@ -722,20 +721,28 @@ export default async function Home() {
   </div>
 </section>
 
-      <footer className="bg-slate-900 py-10 text-white">
-        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-6 px-5 md:flex-row md:items-center lg:px-8">
-          <div>
-            <p className="text-xl font-bold text-pink-300">米堤爾幼兒園</p>
-            <p className="mt-1 text-sm text-slate-400">
-              Miter Kindergarten
-            </p>
-          </div>
+      <footer className="bg-gray-50 border-t border-gray-200 py-8">
+  <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-5 md:flex-row lg:px-8">
 
-          <p className="text-sm text-slate-400">
-            © 2026 米堤爾幼兒園 All Rights Reserved.
-          </p>
-        </div>
-      </footer>
+    <Link href="/" className="flex items-center gap-3">
+      <Image
+        src="/miter-logo.png"
+        alt="米堤爾幼兒園"
+        width={220}
+        height={110}
+        className="h-32 w-auto object-contain"
+      />
+    </Link>
+
+    <p className="text-sm text-slate-600">
+      © 2026 米堤爾幼兒園 All Rights Reserved.
+    </p>
+
+  </div>
+</footer>
+
+<BackToTop />
+
     </main>
   );
 }
