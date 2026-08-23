@@ -4,6 +4,8 @@ import MobileMenu from "../components/MobileMenu";
 import GalleryLightbox from "../components/GalleryLightbox";
 import BackToTop from "../components/BackToTop";
 
+export const revalidate = 0;
+
 import {client} from "@/sanity/lib/client";
 import {
   aboutSettingsQuery,

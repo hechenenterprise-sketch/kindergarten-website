@@ -28,48 +28,7 @@ export const siteSettings = defineType({
       },
     }),
 
-    defineField({
-      name: "phone",
-      title: "聯絡電話",
-      type: "string",
-    }),
-
-    defineField({
-      name: "address",
-      title: "園所地址",
-      type: "string",
-    }),
-
-    defineField({
-      name: "businessHours",
-      title: "服務時間",
-      type: "string",
-      initialValue: "週一至週五 08:00～17:30",
-    }),
-
-    defineField({
-      name: "lineUrl",
-      title: "LINE 連結",
-      type: "url",
-    }),
-
-    defineField({
-      name: "facebookUrl",
-      title: "Facebook 連結",
-      type: "url",
-    }),
-
-    defineField({
-      name: "instagramUrl",
-      title: "Instagram 連結",
-      type: "url",
-    }),
-
-    defineField({
-      name: "googleMapUrl",
-      title: "Google 地圖連結",
-      type: "url",
-    }),
+  
 
     defineField({
       name: "footerText",
