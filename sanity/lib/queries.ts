@@ -1,10 +1,10 @@
 import {defineQuery} from "next-sanity";
 
 export const newsBySlugQuery = defineQuery(`
-*[_type=="news" && slug.current==$slug][0]{
+*[_type=="news" && (slug.current==$slug || _id==$slug)][0]{
   _id,
   title,
-  "slug": slug.current,
+  "slug": coalesce(slug.current, _id),
   publishedAt,
   summary,
   coverImage,
@@ -16,7 +16,7 @@ export const latestNewsQuery = defineQuery(`
   *[_type == "news"] | order(publishedAt desc)[0...3] {
     _id,
     title,
-    "slug": slug.current,
+    "slug": coalesce(slug.current, _id),
     publishedAt,
     summary,
     coverImage
@@ -27,7 +27,7 @@ export const allNewsQuery = `
 *[_type=="news"] | order(publishedAt desc){
   _id,
   title,
-  "slug": slug.current,
+  "slug": coalesce(slug.current, _id),
   publishedAt,
   summary,
   coverImage

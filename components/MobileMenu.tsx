@@ -80,12 +80,12 @@ export default function MobileMenu() {
             </Link>
 
             <Link
-              href="#contact"
-              onClick={closeMenu}
-              className="mt-4 inline-flex h-11 items-center justify-center rounded-full bg-[#df0873] px-6 font-semibold text-white"
-            >
-              預約參觀
-            </Link>
+  href="/login"
+  onClick={closeMenu}
+  className="py-3 font-medium"
+>
+  園務登入
+</Link>
           </nav>
         </div>
       )}

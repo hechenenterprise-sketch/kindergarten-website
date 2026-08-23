@@ -148,12 +148,9 @@ export default async function Home() {
     聯絡我們
   </Link>
 
-  <Link
-    href="#contact"
-    className="inline-flex h-10 items-center justify-center rounded-full bg-[#df0873] px-6 text-sm font-medium text-white transition hover:bg-[#c80767]"
-  >
-    預約參觀
-  </Link>
+  <Link className="transition hover:text-[#df0873]" href="/login">
+  園務登入
+</Link>
 </nav>
 <MobileMenu />
         </div>
@@ -736,15 +733,24 @@ export default async function Home() {
       />
     </Link>
 
-    <p className="text-sm text-slate-600">
-      © 2026 米堤爾幼兒園 All Rights Reserved.
-    </p>
+    <div className="text-center md:text-right">
+      <p className="text-sm text-slate-600">
+        © 2026 米堤爾幼兒園 All Rights Reserved.
+      </p>
+
+      <Link
+        href="/login"
+        className="mt-2 inline-block text-xs text-slate-400 hover:text-[#df0873]"
+      >
+        園務登入
+      </Link>
+    </div>
 
   </div>
 </footer>
 
 <BackToTop />
 
-    </main>
-  );
+</main>
+);
 }

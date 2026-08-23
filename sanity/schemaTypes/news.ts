@@ -14,15 +14,15 @@ export const news = defineType({
     }),
 
     defineField({
-      name: "slug",
-      title: "網址名稱",
-      type: "slug",
-      options: {
-        source: "title",
-        maxLength: 96,
-      },
-      validation: (Rule) => Rule.required(),
-    }),
+  name: "slug",
+  title: "網址名稱",
+  type: "slug",
+  options: {
+    source: "title",
+    maxLength: 96,
+  },
+  hidden: true,
+}),
 
     defineField({
       name: "publishedAt",
