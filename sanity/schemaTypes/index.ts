@@ -6,6 +6,7 @@ import {news} from "./news";
 import {siteSettings} from "./siteSettings";
 import {teacher} from "./teacher";
 import {aboutSettings} from "./aboutSettings";
+import {brochure} from "./brochure";
 
 export const schema = {
   types: [
@@ -17,5 +18,6 @@ export const schema = {
     course,
     teacher,
     gallery,
+    brochure,
   ],
 };

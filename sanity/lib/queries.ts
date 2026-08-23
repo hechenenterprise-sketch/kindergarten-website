@@ -23,6 +23,17 @@ export const latestNewsQuery = defineQuery(`
   }
 `);
 
+export const allNewsQuery = `
+*[_type=="news"] | order(publishedAt desc){
+  _id,
+  title,
+  "slug": slug.current,
+  publishedAt,
+  summary,
+  coverImage
+}
+`;
+
 export const homeSettingsQuery = `
 *[_type == "homeSettings"][0]{
   heroImage,
@@ -91,5 +102,12 @@ export const aboutSettingsQuery = `
   feature1Description,
   feature2Title,
   feature2Description
+}
+`;
+
+export const brochureQuery = `
+*[_type=="brochure" && publish==true][0]{
+  title,
+  "pdfUrl": pdf.asset->url
 }
 `;

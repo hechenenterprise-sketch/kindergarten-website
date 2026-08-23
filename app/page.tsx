@@ -1,10 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import MobileMenu from "../components/MobileMenu";
+import GalleryLightbox from "../components/GalleryLightbox";
 
 import {client} from "@/sanity/lib/client";
 import {
   aboutSettingsQuery,
+  brochureQuery,
   contactSettingsQuery,
   coursesQuery,
   galleryQuery,
@@ -72,8 +74,13 @@ type TeacherItem = {
   image?: unknown;
 };
 
+type Brochure = {
+  title?: string;
+  pdfUrl?: string;
+};
+
 export default async function Home() {
-  const [newsItems, home, about, courses, teachers, gallery, contact] =
+  const [newsItems, home, about, courses, teachers, gallery, contact, brochure] =
   await Promise.all([
     client.fetch<NewsItem[]>(latestNewsQuery).catch(() => []),
     client.fetch(homeSettingsQuery).catch(() => null),
@@ -84,6 +91,7 @@ export default async function Home() {
     client
       .fetch<ContactSettings>(contactSettingsQuery)
       .catch(() => null),
+    client.fetch<Brochure>(brochureQuery).catch(() => null),
   ]);
 
   return (
@@ -289,7 +297,7 @@ export default async function Home() {
     </div>
     <div className="mt-8 text-center">
       <Link
-        href="#news"
+        href="/news"
         className="font-semibold text-[#df0873] transition hover:opacity-70"
       >
         查看全部消息 →
@@ -463,57 +471,34 @@ export default async function Home() {
       <section id="gallery" className="bg-white py-20">
   <div className="mx-auto max-w-7xl px-5 lg:px-8">
     <div className="text-center">
-  <p className="font-semibold tracking-widest text-[#df0873]">
-    ACTIVITY GALLERY
-  </p>
+      <p className="font-semibold tracking-widest text-[#df0873]">
+        ACTIVITY GALLERY
+      </p>
 
-  <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
-    活動相簿
-  </h2>
+      <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
+        活動相簿
+      </h2>
 
-  <p className="mx-auto mt-4 max-w-2xl leading-7 text-slate-600">
-    記錄孩子在課堂、節慶與戶外活動中的快樂時光。
-  </p>
-</div>
-
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-      {gallery.length > 0 ? (
-        gallery.map((item) => (
-          <article
-            key={item._id}
-            className="overflow-hidden rounded-[28px] bg-white shadow-lg transition duration-300 hover:-translate-y-2 hover:shadow-2xl"
-          >
-            <div className="relative aspect-[4/3] overflow-hidden">
-              <Image
-  src={
-    item.image
-      ? urlFor(item.image).width(900).height(700).url()
-      : "/images/hero/hero-1.jpg"
-  }
-  alt={item.title}
-  fill
-  sizes="(max-width:768px) 100vw, 33vw"
-  className="object-cover transition duration-500 hover:scale-110"
-/>
-            </div>
-
-            <div className="p-6">
-              <h3 className="text-xl font-bold">
-                {item.title}
-              </h3>
-
-              <p className="mt-2 text-slate-500">
-                {item.description || "活動照片"}
-              </p>
-            </div>
-          </article>
-        ))
-      ) : (
-        <div className="col-span-full rounded-3xl border border-dashed border-pink-200 bg-white p-10 text-center text-slate-500">
-          目前尚未建立活動相簿
-        </div>
-      )}
+      <p className="mx-auto mt-4 max-w-2xl leading-7 text-slate-600">
+        記錄孩子在課堂、節慶與戶外活動中的快樂時光。
+      </p>
     </div>
+
+    {gallery.length > 0 ? (
+      <GalleryLightbox
+        images={gallery.map((item) => ({
+          src: item.image
+            ? urlFor(item.image).width(1200).height(900).url()
+            : "/images/hero/hero-1.jpg",
+          title: item.title,
+        }))}
+      />
+    ) : (
+      <div className="mt-10 rounded-3xl border border-dashed border-pink-200 bg-white p-10 text-center text-slate-500">
+        目前尚未建立活動相簿
+      </div>
+    )}
+
     <div className="mt-8 text-center">
       <Link
         href="#gallery"
@@ -522,6 +507,38 @@ export default async function Home() {
         查看更多活動 →
       </Link>
     </div>
+  </div>
+</section>
+
+<section className="bg-[#fff9fc] py-20">
+  <div className="mx-auto max-w-5xl px-5 text-center">
+
+    <p className="font-semibold tracking-widest text-[#df0873]">
+      ENROLLMENT
+    </p>
+
+    <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
+      招生簡章
+    </h2>
+
+    <p className="mx-auto mt-4 max-w-2xl leading-7 text-slate-600">
+      歡迎下載最新招生簡章，了解招生資訊、課程內容與入園方式。
+    </p>
+
+    {brochure?.pdfUrl ? (
+      <a
+        href={brochure.pdfUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-10 inline-flex h-12 items-center justify-center rounded-full bg-[#df0873] px-8 font-semibold text-white transition hover:bg-[#c80767]"
+      >
+        📄 {brochure.title || "下載招生簡章"}
+      </a>
+    ) : (
+      <p className="mt-10 text-slate-500">
+        目前尚未提供招生簡章
+      </p>
+    )}
 
   </div>
 </section>
