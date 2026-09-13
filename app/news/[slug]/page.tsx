@@ -9,6 +9,7 @@ import {
 import {client} from "@/sanity/lib/client";
 import {newsBySlugQuery} from "@/sanity/lib/queries";
 import {urlFor} from "@/sanity/lib/image";
+import NewsCategoryBadge from "@/components/NewsCategoryBadge";
 
 type Props = {
   params: Promise<{
@@ -83,6 +84,10 @@ export default async function NewsPage({params}: Props) {
     }).format(new Date(news.publishedAt))}
   </p>
 )}
+
+        <div className="mt-4">
+          <NewsCategoryBadge category={news.category} />
+        </div>
 
         {news.coverImage && (
           <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-[24px] shadow-xl sm:mt-10 sm:rounded-[32px]">

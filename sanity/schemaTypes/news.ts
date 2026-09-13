@@ -31,6 +31,22 @@ export const news = defineType({
     }),
 
     defineField({
+      name: "category",
+      title: "資訊分類",
+      type: "string",
+      description: "請選擇這則消息是園方公告或政府發布的資訊。",
+      options: {
+        list: [
+          {title: "學校資訊", value: "school"},
+          {title: "政府資訊", value: "government"},
+        ],
+        layout: "radio",
+      },
+      initialValue: "school",
+      validation: (Rule) => Rule.required(),
+    }),
+
+    defineField({
       name: "coverImage",
       title: "封面圖片",
       type: "image",
@@ -73,8 +89,18 @@ export const news = defineType({
   preview: {
     select: {
       title: "title",
-      subtitle: "publishedAt",
+      publishedAt: "publishedAt",
+      category: "category",
       media: "coverImage",
+    },
+    prepare({title, publishedAt, category, media}) {
+      const categoryLabel = category === "government" ? "政府資訊" : "學校資訊";
+
+      return {
+        title,
+        subtitle: publishedAt ? `${categoryLabel}｜${publishedAt}` : categoryLabel,
+        media,
+      };
     },
   },
 });

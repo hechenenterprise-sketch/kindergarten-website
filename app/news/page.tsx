@@ -4,12 +4,16 @@ import Link from "next/link";
 import {client} from "@/sanity/lib/client";
 import {allNewsQuery} from "@/sanity/lib/queries";
 import {urlFor} from "@/sanity/lib/image";
+import NewsCategoryBadge, {
+  type NewsCategory,
+} from "@/components/NewsCategoryBadge";
 
 
 type NewsItem = {
   _id: string;
   title: string;
   slug?: string;
+  category?: NewsCategory;
   publishedAt?: string;
   summary?: string;
   coverImage?: unknown;
@@ -98,9 +102,7 @@ export default async function NewsListPage() {
 
                   <div className="flex flex-col justify-center p-6 sm:p-8">
                     <div className="flex flex-wrap items-center gap-3">
-                      <span className="rounded-full bg-pink-100 px-3 py-1 text-xs font-semibold text-[#df0873]">
-                        公告
-                      </span>
+                      <NewsCategoryBadge category={news.category} />
 
                       {news.publishedAt && (
                         <time className="text-sm text-slate-500">

@@ -3,6 +3,9 @@ import Link from "next/link";
 import MobileMenu from "../components/MobileMenu";
 import GalleryLightbox from "../components/GalleryLightbox";
 import BackToTop from "../components/BackToTop";
+import NewsCategoryBadge, {
+  type NewsCategory,
+} from "../components/NewsCategoryBadge";
 
 export const revalidate = 0;
 
@@ -24,6 +27,7 @@ type NewsItem = {
   _id: string;
   title: string;
   slug?: string;
+  category?: NewsCategory;
   publishedAt?: string;
   summary?: string;
 };
@@ -262,9 +266,7 @@ export default async function Home() {
           >
             <div className="flex items-center gap-4">
 
-              <span className="rounded-full bg-pink-100 px-3 py-1 text-xs font-semibold text-[#df0873]">
-                公告
-              </span>
+              <NewsCategoryBadge category={news.category} />
 
               <p className="text-lg font-semibold">
                 {news.title}

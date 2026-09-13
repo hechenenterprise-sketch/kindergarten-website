@@ -5,6 +5,7 @@ export const newsBySlugQuery = defineQuery(`
   _id,
   title,
   "slug": coalesce(slug.current, _id),
+  "category": coalesce(category, "school"),
   publishedAt,
   summary,
   coverImage,
@@ -17,6 +18,7 @@ export const latestNewsQuery = defineQuery(`
     _id,
     title,
     "slug": coalesce(slug.current, _id),
+    "category": coalesce(category, "school"),
     publishedAt,
     summary,
     coverImage
@@ -28,6 +30,7 @@ export const allNewsQuery = `
   _id,
   title,
   "slug": coalesce(slug.current, _id),
+  "category": coalesce(category, "school"),
   publishedAt,
   summary,
   coverImage
