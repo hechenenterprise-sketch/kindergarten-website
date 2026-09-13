@@ -28,6 +28,8 @@ export const news = defineType({
       name: "publishedAt",
       title: "發布日期",
       type: "datetime",
+      initialValue: () => new Date().toISOString(),
+      validation: (Rule) => Rule.required(),
     }),
 
     defineField({

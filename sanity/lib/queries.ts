@@ -6,7 +6,7 @@ export const newsBySlugQuery = defineQuery(`
   title,
   "slug": coalesce(slug.current, _id),
   "category": coalesce(category, "school"),
-  publishedAt,
+  "publishedAt": coalesce(publishedAt, _createdAt),
   summary,
   coverImage,
   content
@@ -14,24 +14,24 @@ export const newsBySlugQuery = defineQuery(`
 `);
 
 export const latestNewsQuery = defineQuery(`
-  *[_type == "news"] | order(publishedAt desc)[0...3] {
+  *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc)[0...3] {
     _id,
     title,
     "slug": coalesce(slug.current, _id),
     "category": coalesce(category, "school"),
-    publishedAt,
+    "publishedAt": coalesce(publishedAt, _createdAt),
     summary,
     coverImage
   }
 `);
 
 export const allNewsQuery = `
-*[_type=="news"] | order(publishedAt desc){
+*[_type=="news"] | order(coalesce(publishedAt, _createdAt) desc){
   _id,
   title,
   "slug": coalesce(slug.current, _id),
   "category": coalesce(category, "school"),
-  publishedAt,
+  "publishedAt": coalesce(publishedAt, _createdAt),
   summary,
   coverImage
 }
