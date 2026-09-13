@@ -746,13 +746,6 @@ export default async function Home() {
       <p className="text-sm text-slate-600">
         © {copyrightYear} 米堤爾幼兒園｜版權所有
       </p>
-
-      <Link
-        href="/login"
-        className="mt-2 inline-block text-xs text-slate-400 hover:text-[#df0873]"
-      >
-        園務登入
-      </Link>
     </div>
 
   </div>
