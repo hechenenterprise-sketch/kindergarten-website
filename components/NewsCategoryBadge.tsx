@@ -15,7 +15,7 @@ export default function NewsCategoryBadge({category = "school"}: Props) {
           : "rounded-full bg-pink-100 px-3 py-1 text-xs font-semibold text-[#df0873]"
       }
     >
-      {isGovernment ? "政府資訊" : "學校資訊"}
+      {isGovernment ? "政府" : "學校"}
     </span>
   );
 }

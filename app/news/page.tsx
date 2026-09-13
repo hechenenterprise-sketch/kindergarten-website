@@ -79,9 +79,9 @@ export default async function NewsListPage() {
                 <Link
                   key={news._id}
                   href={news.slug ? `/news/${news.slug}` : "#"}
-                  className="group grid overflow-hidden rounded-[28px] bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl md:grid-cols-[220px_1fr]"
+                  className="group grid overflow-hidden rounded-[24px] bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl md:grid-cols-[180px_1fr]"
                 >
-                  <div className="relative min-h-[180px] overflow-hidden bg-pink-50">
+                  <div className="relative min-h-[140px] overflow-hidden bg-pink-50 sm:min-h-[160px]">
                     {news.coverImage ? (
                       <Image
                         src={urlFor(news.coverImage)
@@ -90,17 +90,17 @@ export default async function NewsListPage() {
                           .url()}
                         alt={news.title}
                         fill
-                        sizes="(max-width: 768px) 100vw, 220px"
+                        sizes="(max-width: 768px) 100vw, 180px"
                         className="object-cover transition duration-500 group-hover:scale-105"
                       />
                     ) : (
-                      <div className="flex h-full min-h-[180px] items-center justify-center text-5xl">
+                      <div className="flex h-full min-h-[140px] items-center justify-center text-4xl sm:min-h-[160px]">
                         📰
                       </div>
                     )}
                   </div>
 
-                  <div className="flex flex-col justify-center p-6 sm:p-8">
+                  <div className="flex flex-col justify-center p-5 sm:p-6">
                     <div className="flex flex-wrap items-center gap-3">
                       <NewsCategoryBadge category={news.category} />
 
@@ -115,7 +115,7 @@ export default async function NewsListPage() {
                       )}
                     </div>
 
-                    <h2 className="mt-4 text-2xl font-bold transition group-hover:text-[#df0873]">
+                    <h2 className="mt-3 text-xl font-bold transition group-hover:text-[#df0873] sm:text-2xl">
                       {news.title}
                     </h2>
 
@@ -123,7 +123,7 @@ export default async function NewsListPage() {
                       {news.summary || "點擊查看完整消息內容。"}
                     </p>
 
-                    <p className="mt-5 font-semibold text-[#df0873]">
+                    <p className="mt-4 font-semibold text-[#df0873]">
                       閱讀更多 →
                     </p>
                   </div>
