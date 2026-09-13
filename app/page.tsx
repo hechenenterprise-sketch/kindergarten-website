@@ -87,6 +87,13 @@ type Brochure = {
 };
 
 export default async function Home() {
+  const copyrightStartYear = 2026;
+  const currentYear = new Date().getFullYear();
+  const copyrightYear =
+    currentYear > copyrightStartYear
+      ? `${copyrightStartYear}–${currentYear}`
+      : copyrightStartYear;
+
   const [newsItems, home, about, courses, teachers, gallery, contact, brochure] =
   await Promise.all([
     client.fetch<NewsItem[]>(latestNewsQuery).catch(() => []),
@@ -737,7 +744,7 @@ export default async function Home() {
 
     <div className="text-center md:text-right">
       <p className="text-sm text-slate-600">
-        © 2026 米堤爾幼兒園 All Rights Reserved.
+        © {copyrightYear} 米堤爾幼兒園｜版權所有
       </p>
 
       <Link

@@ -34,7 +34,7 @@ export const siteSettings = defineType({
       name: "footerText",
       title: "頁尾文字",
       type: "string",
-      initialValue: "© 2026 米堤爾幼兒園 All Rights Reserved.",
+      initialValue: "© 2026 米堤爾幼兒園｜版權所有",
     }),
   ],
 
