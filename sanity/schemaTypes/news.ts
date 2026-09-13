@@ -50,7 +50,23 @@ export const news = defineType({
       name: "content",
       title: "內容",
       type: "array",
-      of: [{type: "block"}],
+      of: [
+        {type: "block"},
+        {
+          type: "image",
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            defineField({
+              name: "alt",
+              title: "圖片說明",
+              type: "string",
+              description: "會顯示在圖片下方，也能協助搜尋引擎與無障礙閱讀。",
+            }),
+          ],
+        },
+      ],
     }),
   ],
 

@@ -400,7 +400,7 @@ export default async function Home() {
       </p>
     </div>
 
-    <div className="mt-10 grid grid-cols-2 gap-6 lg:grid-cols-4">
+    <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
   {courses.length > 0 ? (
     courses.map((course, index) => {
       const fallbackImages = [

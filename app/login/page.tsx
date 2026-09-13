@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function LoginPage() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-pink-50 via-white to-pink-100 px-6">
-      <div className="w-full max-w-md rounded-3xl bg-white p-10 shadow-2xl">
+      <div className="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl sm:p-10">
 
         <div className="flex justify-center">
           <Image

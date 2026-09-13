@@ -21,7 +21,7 @@ export default function MobileMenu() {
       </button>
 
       {open && (
-        <div className="absolute left-0 top-20 w-full border-t border-pink-100 bg-white shadow-xl">
+        <div className="absolute left-0 top-16 w-full border-t border-pink-100 bg-white shadow-xl sm:top-20">
           <nav className="mx-auto flex max-w-7xl flex-col px-5 py-5">
             <Link
               href="/"
