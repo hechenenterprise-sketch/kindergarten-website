@@ -37,8 +37,9 @@ export const news = defineType({
       description: "請選擇這則消息是園方公告或政府發布的資訊。",
       options: {
         list: [
-          {title: "學校資訊", value: "school"},
+          {title: "校務資訊", value: "school"},
           {title: "政府資訊", value: "government"},
+          {title: "活動資訊", value: "activity"},
         ],
         layout: "radio",
       },
@@ -94,7 +95,12 @@ export const news = defineType({
       media: "coverImage",
     },
     prepare({title, publishedAt, category, media}) {
-      const categoryLabel = category === "government" ? "政府資訊" : "學校資訊";
+      const categoryLabels: Record<string, string> = {
+        school: "校務資訊",
+        government: "政府資訊",
+        activity: "活動資訊",
+      };
+      const categoryLabel = categoryLabels[category] || "校務資訊";
 
       return {
         title,

@@ -262,13 +262,13 @@ export default async function Home() {
           <Link
             key={news._id}
             href={news.slug ? `/news/${news.slug}` : "#"}
-            className="flex flex-col gap-1.5 border-b border-pink-100 px-5 py-3 transition hover:bg-pink-50 sm:px-8 md:flex-row md:items-center md:justify-between"
+            className="flex flex-col gap-1 border-b border-pink-100 px-5 py-2 transition hover:bg-pink-50 sm:px-8 md:flex-row md:items-center md:justify-between"
           >
             <div className="flex items-center gap-3">
 
               <NewsCategoryBadge category={news.category} />
 
-              <p className="font-semibold sm:text-lg">
+              <p className="text-lg font-semibold">
                 {news.title}
               </p>
 
