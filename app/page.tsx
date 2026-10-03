@@ -6,6 +6,7 @@ import BackToTop from "../components/BackToTop";
 import NewsCategoryBadge, {
   type NewsCategory,
 } from "../components/NewsCategoryBadge";
+import {publicSiteConfig} from "@/lib/site-mode";
 
 export const revalidate = 0;
 
@@ -23,6 +24,8 @@ import {
 
 import {urlFor} from "@/sanity/lib/image";
 
+type SanityImage = Parameters<typeof urlFor>[0];
+
 type NewsItem = {
   _id: string;
   title: string;
@@ -37,12 +40,12 @@ type CourseItem = {
   title: string;
   age?: string;
   description?: string;
-  image?: unknown;
+  image?: SanityImage;
   order?: number;
 };
 
 type AboutSettings = {
-  image?: unknown;
+  image?: SanityImage;
   eyebrow?: string;
   title?: string;
   description1?: string;
@@ -69,7 +72,7 @@ type GalleryItem = {
   _id: string;
   title: string;
   description?: string;
-  image?: unknown;
+  image?: SanityImage;
   order?: number;
 };
 
@@ -78,7 +81,7 @@ type TeacherItem = {
   name: string;
   title?: string;
   description?: string;
-  image?: unknown;
+  image?: SanityImage;
 };
 
 type Brochure = {
@@ -96,7 +99,9 @@ export default async function Home() {
 
   const [newsItems, home, about, courses, teachers, gallery, contact, brochure] =
   await Promise.all([
-    client.fetch<NewsItem[]>(latestNewsQuery).catch(() => []),
+    publicSiteConfig.showNews
+      ? client.fetch<NewsItem[]>(latestNewsQuery).catch(() => [])
+      : Promise.resolve([]),
     client.fetch(homeSettingsQuery).catch(() => null),
     client.fetch<AboutSettings>(aboutSettingsQuery).catch(() => null),
     client.fetch<CourseItem[]>(coursesQuery).catch(() => []),
@@ -107,6 +112,16 @@ export default async function Home() {
       .catch(() => null),
     client.fetch<Brochure>(brochureQuery).catch(() => null),
   ]);
+
+  const galleryImages = gallery
+    .filter(
+      (item): item is GalleryItem & {image: SanityImage} =>
+        Boolean(item.image)
+    )
+    .map((item) => ({
+      src: urlFor(item.image!).width(1200).height(900).url(),
+      title: item.title,
+    }));
 
   return (
     <main className="min-h-screen bg-[#fffdf8] text-slate-800">
@@ -135,9 +150,11 @@ export default async function Home() {
     首頁
   </Link>
 
-  <Link className="transition hover:text-[#df0873]" href="#news">
-    最新消息
-  </Link>
+  {publicSiteConfig.showNews ? (
+    <Link className="transition hover:text-[#df0873]" href="#news">
+      最新消息
+    </Link>
+  ) : null}
 
   <Link className="transition hover:text-[#df0873]" href="#about">
     關於我們
@@ -159,27 +176,27 @@ export default async function Home() {
     聯絡我們
   </Link>
 
-  <Link className="transition hover:text-[#df0873]" href="/login">
-  園務登入
-</Link>
+  {publicSiteConfig.showAdminLogin ? (
+    <Link className="transition hover:text-[#df0873]" href="/login">
+      園務登入
+    </Link>
+  ) : null}
 </nav>
 <MobileMenu />
         </div>
       </header>
 
-      <section className="relative min-h-[390px] overflow-hidden sm:min-h-[420px]">
-  <Image
-  src={
-    home?.heroImage
-      ? urlFor(home.heroImage).width(2000).url()
-      : "/images/hero/hero-1.jpg"
-  }
-  sizes="100vw"
-  alt="米堤爾幼兒園"
-  fill
-  priority
-  className="object-cover"
-/>
+      <section className="relative min-h-[390px] overflow-hidden bg-gradient-to-br from-[#a90555] via-[#df0873] to-pink-400 sm:min-h-[420px]">
+  {home?.heroImage ? (
+    <Image
+      src={urlFor(home.heroImage).width(2000).url()}
+      sizes="100vw"
+      alt="米堤爾幼兒園"
+      fill
+      priority
+      className="object-cover"
+    />
+  ) : null}
 
   <div className="absolute inset-0 bg-gradient-to-r from-slate-950/75 via-slate-900/45 to-transparent" />
   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/45 via-transparent to-transparent" />
@@ -243,6 +260,7 @@ export default async function Home() {
  </div>
 </section>
 
+{publicSiteConfig.showNews ? (
 <section id="news" className="bg-[#fff9fc] py-16">
   <div className="mx-auto max-w-7xl px-5 lg:px-8">
 
@@ -313,22 +331,26 @@ export default async function Home() {
 
   </div>
 </section>
+) : null}
 
 <section id="about" className="bg-white py-20">
   <div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-2 lg:px-8">
     <div className="relative">
       <div className="relative min-h-[430px] overflow-hidden rounded-[36px] shadow-xl">
-        <Image
-  src={
-    about?.image
-      ? urlFor(about.image).width(1000).height(800).url()
-      : "/images/hero/hero-2.jpg"
-  }
-  alt={about?.title || "認識米堤爾幼兒園"}
-  fill
-  sizes="(max-width: 1024px) 100vw, 50vw"
-  className="object-cover"
-/>
+        {about?.image ? (
+          <Image
+            src={urlFor(about.image).width(1000).height(800).url()}
+            alt={about?.title || "認識米堤爾幼兒園"}
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover"
+          />
+        ) : (
+          <div
+            className="absolute inset-0 bg-gradient-to-br from-pink-50 via-white to-rose-100"
+            aria-hidden="true"
+          />
+        )}
       </div>
 
       <div className="absolute -bottom-6 -right-4 rounded-3xl bg-white px-6 py-5 shadow-xl sm:right-4">
@@ -412,13 +434,6 @@ export default async function Home() {
     <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
   {courses.length > 0 ? (
     courses.map((course, index) => {
-      const fallbackImages = [
-        "/images/hero/hero-1.jpg",
-        "/images/hero/hero-2.jpg",
-        "/images/hero/hero-3.jpg",
-        "/images/hero/hero-1.jpg",
-      ];
-
       const tagColors = [
         "bg-pink-100",
         "bg-yellow-100",
@@ -432,17 +447,20 @@ export default async function Home() {
           className="overflow-hidden rounded-[28px] bg-white shadow-lg transition duration-300 hover:-translate-y-2 hover:shadow-2xl"
         >
           <div className="relative h-48 overflow-hidden">
-            <Image
-  src={
-    course.image
-      ? urlFor(course.image).width(900).height(600).url()
-      : fallbackImages[index % fallbackImages.length]
-  }
-  alt={course.title}
-  fill
-  sizes="(max-width:768px) 50vw, 25vw"
-  className="object-cover transition duration-500 hover:scale-110"
-/>
+            {course.image ? (
+              <Image
+                src={urlFor(course.image).width(900).height(600).url()}
+                alt={course.title}
+                fill
+                sizes="(max-width:768px) 50vw, 25vw"
+                className="object-cover transition duration-500 hover:scale-110"
+              />
+            ) : (
+              <div
+                className="absolute inset-0 bg-gradient-to-br from-pink-50 via-white to-amber-50"
+                aria-hidden="true"
+              />
+            )}
           </div>
 
           <div className="p-5">
@@ -491,14 +509,9 @@ export default async function Home() {
       </p>
     </div>
 
-    {gallery.length > 0 ? (
+    {galleryImages.length > 0 ? (
       <GalleryLightbox
-        images={gallery.map((item) => ({
-          src: item.image
-            ? urlFor(item.image).width(1200).height(900).url()
-            : "/images/hero/hero-1.jpg",
-          title: item.title,
-        }))}
+        images={galleryImages}
       />
     ) : (
       <div className="mt-10 rounded-3xl border border-dashed border-pink-200 bg-white p-10 text-center text-slate-500">
@@ -577,19 +590,20 @@ export default async function Home() {
           className="teacher-card overflow-hidden rounded-[28px] bg-white shadow-lg"
         >
           <div className="relative h-64 overflow-hidden">
-
-            <Image
-  src={
-    teacher.image
-      ? urlFor(teacher.image).width(600).height(700).url()
-      : "/images/hero/hero-1.jpg"
-  }
-  alt={teacher.name}
-  fill
-  sizes="320px"
-  className="object-cover"
-/>
-
+            {teacher.image ? (
+              <Image
+                src={urlFor(teacher.image).width(600).height(700).url()}
+                alt={teacher.name}
+                fill
+                sizes="320px"
+                className="object-cover"
+              />
+            ) : (
+              <div
+                className="absolute inset-0 bg-gradient-to-br from-pink-50 via-white to-rose-100"
+                aria-hidden="true"
+              />
+            )}
           </div>
 
           <div className="p-6 text-center">
@@ -745,6 +759,9 @@ export default async function Home() {
     <div className="text-center md:text-right">
       <p className="text-sm text-slate-600">
         © {copyrightYear} 米堤爾幼兒園｜版權所有
+      </p>
+      <p className="mt-2 max-w-md text-xs leading-5 text-slate-500">
+        {publicSiteConfig.informationNotice}
       </p>
     </div>
 

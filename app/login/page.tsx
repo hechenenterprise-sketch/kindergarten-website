@@ -1,7 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import {notFound} from "next/navigation";
+import {publicSiteConfig} from "@/lib/site-mode";
 
 export default function LoginPage() {
+  if (!publicSiteConfig.showAdminLogin) {
+    notFound();
+  }
+
   return (
     <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-pink-50 via-white to-pink-100 px-6">
       <div className="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl sm:p-10">

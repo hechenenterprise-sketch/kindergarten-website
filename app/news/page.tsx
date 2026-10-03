@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import {notFound} from "next/navigation";
 
 import {client} from "@/sanity/lib/client";
 import {allNewsQuery} from "@/sanity/lib/queries";
@@ -7,6 +8,7 @@ import {urlFor} from "@/sanity/lib/image";
 import NewsCategoryBadge, {
   type NewsCategory,
 } from "@/components/NewsCategoryBadge";
+import {publicSiteConfig} from "@/lib/site-mode";
 
 
 type NewsItem = {
@@ -20,6 +22,10 @@ type NewsItem = {
 };
 
 export default async function NewsListPage() {
+  if (!publicSiteConfig.showNews) {
+    notFound();
+  }
+
   const newsItems = await client
     .fetch<NewsItem[]>(allNewsQuery)
     .catch(() => []);

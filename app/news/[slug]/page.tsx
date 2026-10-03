@@ -10,6 +10,7 @@ import {client} from "@/sanity/lib/client";
 import {newsBySlugQuery} from "@/sanity/lib/queries";
 import {urlFor} from "@/sanity/lib/image";
 import NewsCategoryBadge from "@/components/NewsCategoryBadge";
+import {publicSiteConfig} from "@/lib/site-mode";
 
 type Props = {
   params: Promise<{
@@ -52,6 +53,10 @@ const portableTextComponents: PortableTextComponents = {
 };
 
 export default async function NewsPage({params}: Props) {
+  if (!publicSiteConfig.showNews) {
+    notFound();
+  }
+
   const {slug} = await params;
 
   const news = await client.fetch(newsBySlugQuery, {slug});

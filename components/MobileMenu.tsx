@@ -3,6 +3,7 @@
 import Link from "next/link";
 import {Menu, X} from "lucide-react";
 import {useState} from "react";
+import {publicSiteConfig} from "@/lib/site-mode";
 
 export default function MobileMenu() {
   const [open, setOpen] = useState(false);
@@ -31,13 +32,15 @@ export default function MobileMenu() {
               首頁
             </Link>
 
-            <Link
-              href="#news"
-              onClick={closeMenu}
-              className="border-b border-pink-50 py-3 font-medium"
-            >
-              最新消息
-            </Link>
+            {publicSiteConfig.showNews ? (
+              <Link
+                href="#news"
+                onClick={closeMenu}
+                className="border-b border-pink-50 py-3 font-medium"
+              >
+                最新消息
+              </Link>
+            ) : null}
 
             <Link
               href="#about"
@@ -79,13 +82,15 @@ export default function MobileMenu() {
               聯絡我們
             </Link>
 
-            <Link
-  href="/login"
-  onClick={closeMenu}
-  className="py-3 font-medium"
->
-  園務登入
-</Link>
+            {publicSiteConfig.showAdminLogin ? (
+              <Link
+                href="/login"
+                onClick={closeMenu}
+                className="py-3 font-medium"
+              >
+                園務登入
+              </Link>
+            ) : null}
           </nav>
         </div>
       )}
