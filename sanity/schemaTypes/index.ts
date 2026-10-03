@@ -7,6 +7,7 @@ import {siteSettings} from "./siteSettings";
 import {teacher} from "./teacher";
 import {aboutSettings} from "./aboutSettings";
 import {brochure} from "./brochure";
+import {siteViewCount} from "./siteViewCount";
 
 export const schema = {
   types: [
@@ -19,5 +20,6 @@ export const schema = {
     teacher,
     gallery,
     brochure,
+    siteViewCount,
   ],
 };

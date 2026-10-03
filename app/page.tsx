@@ -3,6 +3,7 @@ import Link from "next/link";
 import MobileMenu from "../components/MobileMenu";
 import GalleryLightbox from "../components/GalleryLightbox";
 import BackToTop from "../components/BackToTop";
+import ViewCounter from "../components/ViewCounter";
 import NewsCategoryBadge, {
   type NewsCategory,
 } from "../components/NewsCategoryBadge";
@@ -145,6 +146,7 @@ export default async function Home() {
   </div>
 </Link>
 
+          <div className="flex items-center gap-3">
           <nav className="hidden items-center gap-8 text-sm font-medium lg:flex">
   <Link className="transition hover:text-[#df0873]" href="/">
     首頁
@@ -182,7 +184,9 @@ export default async function Home() {
     </Link>
   ) : null}
 </nav>
+<ViewCounter />
 <MobileMenu />
+          </div>
         </div>
       </header>
 
