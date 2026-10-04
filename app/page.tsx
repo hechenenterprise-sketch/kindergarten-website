@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import {Phone} from "lucide-react";
 import MobileMenu from "../components/MobileMenu";
 import GalleryLightbox from "../components/GalleryLightbox";
 import BackToTop from "../components/BackToTop";
@@ -687,9 +688,11 @@ export default async function Home() {
           {contact?.phone && (
             <a
               href={`tel:${contact.phone}`}
-              className="inline-flex h-11 items-center justify-center rounded-full bg-[#df0873] px-7 font-semibold text-white transition hover:bg-[#c80767]"
+              aria-label="電話諮詢"
+              title="電話諮詢"
+              className="inline-flex size-12 items-center justify-center rounded-full bg-[#df0873] text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#c80767] hover:shadow-md"
             >
-              電話諮詢
+              <Phone className="size-5" aria-hidden="true" />
             </a>
           )}
 
@@ -709,9 +712,13 @@ export default async function Home() {
               href={contact.facebookUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex h-11 items-center justify-center rounded-full border border-pink-200 bg-white px-7 font-semibold text-slate-700 transition hover:bg-pink-50"
+              aria-label="Facebook"
+              title="Facebook"
+              className="inline-flex size-12 items-center justify-center rounded-full bg-[#1877f2] text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#0f68db] hover:shadow-md"
             >
-              Facebook
+              <span className="font-sans text-2xl font-bold leading-none" aria-hidden="true">
+                f
+              </span>
             </a>
           )}
         </div>
