@@ -716,9 +716,13 @@ export default async function Home() {
               title="Facebook"
               className="inline-flex size-12 items-center justify-center rounded-full bg-[#1877f2] text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#0f68db] hover:shadow-md"
             >
-              <span className="font-sans text-2xl font-bold leading-none" aria-hidden="true">
-                f
-              </span>
+              <svg
+                viewBox="0 0 24 24"
+                className="size-6 fill-current"
+                aria-hidden="true"
+              >
+                <path d="M13.5 8.5V6.75c0-.84.56-1.04.96-1.04h2.44V2.1L13.54 2C9.85 2 9 4.76 9 6.52V8.5H6v4h3V22h4.5v-9.5h3l.4-4h-3.4Z" />
+              </svg>
             </a>
           )}
         </div>
