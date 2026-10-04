@@ -91,6 +91,15 @@ type Brochure = {
   pdfUrl?: string;
 };
 
+function formatMultilineText(value: string) {
+  return value
+    .replace(/\u3000/g, " ")
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .join("\n")
+    .trim();
+}
+
 export default async function Home() {
   const copyrightStartYear = 2026;
   const currentYear = new Date().getFullYear();
@@ -372,14 +381,18 @@ export default async function Home() {
         {about?.title || "認識米堤爾幼兒園"}
       </h2>
 
-      <p className="mt-6 leading-8 text-slate-600">
-        {about?.description1 ||
-          "米堤爾幼兒園秉持著「陪伴、探索、成長」的教育理念，在充滿愛與尊重的環境中，陪伴孩子建立自信、培養良好的生活習慣，並透過多元課程激發創造力與學習興趣。"}
+      <p className="mt-6 whitespace-pre-line leading-8 text-slate-600">
+        {formatMultilineText(
+          about?.description1 ||
+            "米堤爾幼兒園秉持著「陪伴、探索、成長」的教育理念，在充滿愛與尊重的環境中，陪伴孩子建立自信、培養良好的生活習慣，並透過多元課程激發創造力與學習興趣。"
+        )}
       </p>
 
-      <p className="mt-4 leading-8 text-slate-600">
-        {about?.description2 ||
-          "我們相信，每位孩子都有屬於自己的成長節奏，老師扮演的是陪伴者與引導者，讓孩子在快樂中學習，在探索中成長。"}
+      <p className="mt-4 whitespace-pre-line leading-8 text-slate-600">
+        {formatMultilineText(
+          about?.description2 ||
+            "我們相信，每位孩子都有屬於自己的成長節奏，老師扮演的是陪伴者與引導者，讓孩子在快樂中學習，在探索中成長。"
+        )}
       </p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">

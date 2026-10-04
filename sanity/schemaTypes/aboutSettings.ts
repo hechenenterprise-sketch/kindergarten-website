@@ -33,14 +33,16 @@ export const aboutSettings = defineType({
       name: "description1",
       title: "介紹文字一",
       type: "text",
-      rows: 4,
+      rows: 6,
+      description: "按一次 Enter 換行；按兩次 Enter 可空一行分段，請勿用空白鍵排版。",
     }),
 
     defineField({
       name: "description2",
       title: "介紹文字二",
       type: "text",
-      rows: 4,
+      rows: 6,
+      description: "按一次 Enter 換行；按兩次 Enter 可空一行分段，請勿用空白鍵排版。",
     }),
 
     defineField({
