@@ -406,7 +406,7 @@ export default async function Home() {
     </div>
   </div>
 
-  <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  <div className="mt-12 grid auto-rows-fr gap-4 sm:grid-cols-2 lg:grid-cols-4">
     <div className="h-full rounded-2xl bg-pink-50 p-5">
       <p className="text-2xl">🛡️</p>
       <h3 className="mt-3 text-lg font-bold">
