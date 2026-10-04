@@ -346,7 +346,8 @@ export default async function Home() {
 ) : null}
 
 <section id="about" className="bg-white py-20">
-  <div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-2 lg:px-8">
+  <div className="mx-auto max-w-7xl px-5 lg:px-8">
+  <div className="grid gap-12 lg:grid-cols-2">
     <div className="self-start">
       <div className="relative">
         <div className="relative min-h-[430px] overflow-hidden rounded-[36px] shadow-xl">
@@ -377,29 +378,6 @@ export default async function Home() {
         </div>
       </div>
 
-      <div className="mt-12 grid gap-4 sm:grid-cols-2">
-        <div className="rounded-2xl bg-pink-50 p-5">
-          <p className="text-2xl">🛡️</p>
-          <h3 className="mt-3 text-lg font-bold">
-            {about?.feature3Title || "安全環境"}
-          </h3>
-          <p className="mt-2 text-sm leading-6 text-slate-600">
-            {about?.feature3Description ||
-              "提供安心、舒適的學習空間。"}
-          </p>
-        </div>
-
-        <div className="rounded-2xl bg-pink-50 p-5">
-          <p className="text-2xl">👩‍🏫</p>
-          <h3 className="mt-3 text-lg font-bold">
-            {about?.feature4Title || "專業師資"}
-          </h3>
-          <p className="mt-2 text-sm leading-6 text-slate-600">
-            {about?.feature4Description ||
-              "用耐心與專業陪伴孩子成長。"}
-          </p>
-        </div>
-      </div>
     </div>
 
     <div className="flex flex-col justify-center">
@@ -425,34 +403,50 @@ export default async function Home() {
         )}
       </p>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
-        <div className="rounded-2xl bg-pink-50 p-5">
-          <p className="text-2xl">❤️</p>
-
-          <h3 className="mt-3 text-lg font-bold">
-            {about?.feature1Title || "愛與陪伴"}
-          </h3>
-
-          <p className="mt-2 text-sm leading-6 text-slate-600">
-            {about?.feature1Description ||
-              "建立孩子安全感與自信心。"}
-          </p>
-        </div>
-
-        <div className="rounded-2xl bg-pink-50 p-5">
-          <p className="text-2xl">🌱</p>
-
-          <h3 className="mt-3 text-lg font-bold">
-            {about?.feature2Title || "快樂探索"}
-          </h3>
-
-          <p className="mt-2 text-sm leading-6 text-slate-600">
-            {about?.feature2Description ||
-              "鼓勵孩子主動學習與探索世界。"}
-          </p>
-        </div>
-      </div>
     </div>
+  </div>
+
+  <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="h-full rounded-2xl bg-pink-50 p-5">
+      <p className="text-2xl">🛡️</p>
+      <h3 className="mt-3 text-lg font-bold">
+        {about?.feature3Title || "安全環境"}
+      </h3>
+      <p className="mt-2 text-sm leading-6 text-slate-600">
+        {about?.feature3Description || "提供安心、舒適的學習空間。"}
+      </p>
+    </div>
+
+    <div className="h-full rounded-2xl bg-pink-50 p-5">
+      <p className="text-2xl">👩‍🏫</p>
+      <h3 className="mt-3 text-lg font-bold">
+        {about?.feature4Title || "專業師資"}
+      </h3>
+      <p className="mt-2 text-sm leading-6 text-slate-600">
+        {about?.feature4Description || "用耐心與專業陪伴孩子成長。"}
+      </p>
+    </div>
+
+    <div className="h-full rounded-2xl bg-pink-50 p-5">
+      <p className="text-2xl">❤️</p>
+      <h3 className="mt-3 text-lg font-bold">
+        {about?.feature1Title || "愛與陪伴"}
+      </h3>
+      <p className="mt-2 text-sm leading-6 text-slate-600">
+        {about?.feature1Description || "建立孩子安全感與自信心。"}
+      </p>
+    </div>
+
+    <div className="h-full rounded-2xl bg-pink-50 p-5">
+      <p className="text-2xl">🌱</p>
+      <h3 className="mt-3 text-lg font-bold">
+        {about?.feature2Title || "快樂探索"}
+      </h3>
+      <p className="mt-2 text-sm leading-6 text-slate-600">
+        {about?.feature2Description || "鼓勵孩子主動學習與探索世界。"}
+      </p>
+    </div>
+  </div>
   </div>
 </section>
 
