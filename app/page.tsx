@@ -230,12 +230,6 @@ export default async function Home() {
           {home?.primaryButtonText || "立即預約參觀"}
         </Link>
 
-        <Link
-          href="#about"
-          className="inline-flex h-11 w-full items-center justify-center rounded-full border border-white/50 bg-white/10 px-8 text-base font-semibold text-white backdrop-blur-md transition hover:bg-white hover:text-slate-900 sm:w-auto"
-        >
-          {home?.secondaryButtonText || "認識米堤爾"}
-        </Link>
       </div>
 
       <div className="mt-7 flex flex-wrap gap-x-4 gap-y-2 text-xs text-white/85 sm:mt-10 sm:gap-x-7 sm:gap-y-3 sm:text-sm">
