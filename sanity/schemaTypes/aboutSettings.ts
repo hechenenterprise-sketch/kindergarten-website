@@ -86,6 +86,34 @@ export const aboutSettings = defineType({
       type: "string",
       initialValue: "鼓勵孩子主動學習與探索世界。",
     }),
+
+    defineField({
+      name: "feature3Title",
+      title: "特色三標題",
+      type: "string",
+      initialValue: "安全環境",
+    }),
+
+    defineField({
+      name: "feature3Description",
+      title: "特色三介紹",
+      type: "string",
+      initialValue: "提供安心、舒適的學習空間。",
+    }),
+
+    defineField({
+      name: "feature4Title",
+      title: "特色四標題",
+      type: "string",
+      initialValue: "專業師資",
+    }),
+
+    defineField({
+      name: "feature4Description",
+      title: "特色四介紹",
+      type: "string",
+      initialValue: "用耐心與專業陪伴孩子成長。",
+    }),
   ],
 
   preview: {

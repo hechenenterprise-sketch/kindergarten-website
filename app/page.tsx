@@ -58,6 +58,10 @@ type AboutSettings = {
   feature1Description?: string;
   feature2Title?: string;
   feature2Description?: string;
+  feature3Title?: string;
+  feature3Description?: string;
+  feature4Title?: string;
+  feature4Description?: string;
 };
 
 type ContactSettings = {
@@ -343,32 +347,58 @@ export default async function Home() {
 
 <section id="about" className="bg-white py-20">
   <div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-2 lg:px-8">
-    <div className="relative self-start">
-      <div className="relative min-h-[430px] overflow-hidden rounded-[36px] shadow-xl">
-        {about?.image ? (
-          <Image
-            src={urlFor(about.image).width(1000).height(800).url()}
-            alt={about?.title || "認識米堤爾幼兒園"}
-            fill
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-cover"
-          />
-        ) : (
-          <div
-            className="absolute inset-0 bg-gradient-to-br from-pink-50 via-white to-rose-100"
-            aria-hidden="true"
-          />
-        )}
+    <div className="self-start">
+      <div className="relative">
+        <div className="relative min-h-[430px] overflow-hidden rounded-[36px] shadow-xl">
+          {about?.image ? (
+            <Image
+              src={urlFor(about.image).width(1000).height(800).url()}
+              alt={about?.title || "認識米堤爾幼兒園"}
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
+            />
+          ) : (
+            <div
+              className="absolute inset-0 bg-gradient-to-br from-pink-50 via-white to-rose-100"
+              aria-hidden="true"
+            />
+          )}
+        </div>
+
+        <div className="absolute -bottom-6 -right-4 rounded-3xl bg-white px-6 py-5 shadow-xl sm:right-4">
+          <p className="text-3xl font-bold text-[#df0873]">
+            {about?.experienceYears || "15+"}
+          </p>
+
+          <p className="mt-1 text-sm text-slate-500">
+            {about?.experienceLabel || "年幼教經驗"}
+          </p>
+        </div>
       </div>
 
-      <div className="absolute -bottom-6 -right-4 rounded-3xl bg-white px-6 py-5 shadow-xl sm:right-4">
-        <p className="text-3xl font-bold text-[#df0873]">
-          {about?.experienceYears || "15+"}
-        </p>
+      <div className="mt-12 grid gap-4 sm:grid-cols-2">
+        <div className="rounded-2xl bg-pink-50 p-5">
+          <p className="text-2xl">🛡️</p>
+          <h3 className="mt-3 text-lg font-bold">
+            {about?.feature3Title || "安全環境"}
+          </h3>
+          <p className="mt-2 text-sm leading-6 text-slate-600">
+            {about?.feature3Description ||
+              "提供安心、舒適的學習空間。"}
+          </p>
+        </div>
 
-        <p className="mt-1 text-sm text-slate-500">
-          {about?.experienceLabel || "年幼教經驗"}
-        </p>
+        <div className="rounded-2xl bg-pink-50 p-5">
+          <p className="text-2xl">👩‍🏫</p>
+          <h3 className="mt-3 text-lg font-bold">
+            {about?.feature4Title || "專業師資"}
+          </h3>
+          <p className="mt-2 text-sm leading-6 text-slate-600">
+            {about?.feature4Description ||
+              "用耐心與專業陪伴孩子成長。"}
+          </p>
+        </div>
       </div>
     </div>
 

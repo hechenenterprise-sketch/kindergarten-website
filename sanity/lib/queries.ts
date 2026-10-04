@@ -104,7 +104,11 @@ export const aboutSettingsQuery = `
   feature1Title,
   feature1Description,
   feature2Title,
-  feature2Description
+  feature2Description,
+  feature3Title,
+  feature3Description,
+  feature4Title,
+  feature4Description
 }
 `;
 
