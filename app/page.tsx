@@ -806,8 +806,8 @@ export default async function Home() {
       <p className="text-sm text-slate-600">
         © {copyrightYear} 米堤爾幼兒園｜版權所有
       </p>
-      <p className="mt-2 max-w-md text-xs leading-5 text-slate-500">
-        {publicSiteConfig.informationNotice}
+      <p className="mt-2 text-xs font-medium tracking-wide text-slate-500">
+        Website by HECHEN DIGITAL
       </p>
     </div>
 
