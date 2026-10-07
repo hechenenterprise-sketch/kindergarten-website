@@ -804,10 +804,10 @@ export default async function Home() {
 
     <div className="text-center md:text-right">
       <p className="text-sm text-slate-600">
-        © {copyrightYear} 米堤爾幼兒園｜版權所有
+        © {copyrightYear} 米堤爾幼兒園｜Website by HECHEN DIGITAL
       </p>
-      <p className="mt-2 text-xs font-medium tracking-wide text-slate-500">
-        Website by HECHEN DIGITAL
+      <p className="mt-2 max-w-md text-xs leading-5 text-slate-500">
+        {publicSiteConfig.informationNotice}
       </p>
     </div>
 
