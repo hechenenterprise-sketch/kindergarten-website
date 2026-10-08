@@ -4,6 +4,8 @@ import {ArrowDown, ArrowUpRight, Phone, Sprout} from "lucide-react";
 import MobileMenu from "@/components/MobileMenu";
 import BackToTop from "@/components/BackToTop";
 import Reveal from "@/components/Reveal";
+import {NewsSection, GallerySection, TeachersSection} from "@/components/DeferredSections";
+import {siteNavigation} from "@/lib/site-navigation";
 import {publicSiteConfig} from "@/lib/site-mode";
 import {client} from "@/sanity/lib/client";
 import {aboutSettingsQuery, brochureQuery, contactSettingsQuery, coursesQuery, homeSettingsQuery} from "@/sanity/lib/queries";
@@ -47,7 +49,7 @@ export default async function Home() {
     <a className="skip-link" href="#main-content">跳至主要內容</a>
     <header className="miter-header"><div className="page-width header-inner">
       <Link href="/" className="brand" aria-label="米堤爾幼兒園首頁"><Image src="/miter-logo.png" alt="米堤爾幼兒園" width={150} height={90} priority /><span>米堤爾幼兒園<small>MITER KINDERGARTEN</small></span></Link>
-      <nav className="desktop-nav" aria-label="主要選單"><a href="#about">關於我們</a><a href="#courses">課程介紹</a><a href="#enrollment">招生簡章</a><a href="#contact" className="nav-contact">預約參觀 <ArrowUpRight size={15}/></a></nav><MobileMenu />
+      <nav className="desktop-nav" aria-label="主要選單">{siteNavigation.map(item => <Link key={item.href} href={item.href} className={item.href === "#contact" ? "nav-contact" : undefined}>{item.label}{item.href === "#contact" && <ArrowUpRight size={15}/>}</Link>)}</nav><MobileMenu />
     </div></header>
     <section id="main-content" className="hero page-width">
       <div className="hero-copy"><p className="eyebrow"><span className="tiny-dot"/>{home?.eyebrow || "MITER · A PLACE TO GROW"}</p>
@@ -64,6 +66,7 @@ export default async function Home() {
       </div>
       <a className="scroll-note" href="#about"><ArrowDown size={15}/> 往下，認識我們 <span>01 / 開始探索</span></a>
     </section>
+    <NewsSection/>
     <div className="chapter-divider page-width"><span>陪伴</span><span className="divider-star">✳</span><span>探索</span><span className="divider-star">✳</span><span>成長</span><small>EVERY CHILD, THEIR OWN PACE.</small></div>
     <section id="about" className="about-section page-width">
       <Reveal className="section-label"><span>01</span><p>{about?.eyebrow || "ABOUT MITER"}<small>關於米堤爾</small></p></Reveal>
@@ -76,7 +79,9 @@ export default async function Home() {
       <Reveal className="section-heading"><h2>多元課程設計<span>讓探索，成為日常。</span></h2><p>依照不同年齡規劃適合孩子發展的學習內容，讓孩子在遊戲中學習，在探索中成長。</p></Reveal>
       <div className="course-grid">{courses.length ? courses.map((course, index) => <Reveal key={course._id} className="course-item"><article><div className="course-image"><CirclePhoto image={course.image} alt={course.title}/><span className="course-index">{String(index + 1).padStart(2, "0")}</span></div><span className="age-tag">{course.age || "適齡課程"}</span><h3>{course.title}</h3><p>{course.description || "培養生活自理、社交互動與快樂學習能力。"}</p></article></Reveal>) : <p className="empty-content">課程資訊準備中，歡迎聯絡園所了解更多。</p>}</div>
     </div></section>
+    <GallerySection/>
     <section id="enrollment" className="enrollment-section page-width"><Reveal className="enrollment-inner"><div><p className="eyebrow">03 / ENROLLMENT</p><h2>一起，翻開成長的下一頁。</h2><p>歡迎下載最新招生簡章，了解招生資訊、課程內容與入園方式。</p></div>{brochure?.pdfUrl ? <a href={brochure.pdfUrl} target="_blank" rel="noopener noreferrer" className="pill-button">{brochure.title || "下載招生簡章"}<ArrowUpRight size={18}/></a> : <a href="#contact" className="pill-button">洽詢招生資訊<ArrowUpRight size={18}/></a>}</Reveal></section>
+    <TeachersSection/>
     <section id="contact" className="contact-section page-width"><Reveal className="section-label"><span>04</span><p>COME SAY HELLO<small>聯絡我們</small></p></Reveal>
       <div className="contact-grid"><Reveal><h2>歡迎預約參觀<span>米堤爾幼兒園</span></h2><p className="contact-description">{contact?.description || "歡迎家長來電或透過 LINE 與我們聯絡，了解招生資訊、課程內容與可預約參觀的時段。"}</p><dl className="contact-details"><div><dt>園所地址</dt><dd>{contact?.address || "歡迎聯絡園所洽詢"}</dd></div><div><dt>聯絡電話</dt><dd>{contact?.phone ? <a href={`tel:${contact.phone}`}>{contact.phone}</a> : "歡迎聯絡園所洽詢"}</dd></div><div><dt>服務時間</dt><dd>{contact?.serviceHours || "週一至週五 08:00～17:30"}</dd></div></dl><div className="contact-actions">{contact?.phone && <a className="pill-button" href={`tel:${contact.phone}`}><Phone size={16}/>電話諮詢</a>}{contact?.lineUrl && <a className="outline-button" href={contact.lineUrl} target="_blank" rel="noopener noreferrer">LINE 聯絡<ArrowUpRight size={16}/></a>}{contact?.facebookUrl && <a className="social-link" href={contact.facebookUrl} target="_blank" rel="noopener noreferrer">Facebook<ArrowUpRight size={15}/></a>}</div></Reveal>
         <Reveal className="map-panel">{contact?.googleMapEmbedUrl ? <iframe src={contact.googleMapEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="米堤爾幼兒園 Google 地圖"/> : <div className="map-placeholder"><Sprout size={45} strokeWidth={1}/><p>期待與你相見</p><span>歡迎聯絡園所預約參觀</span></div>}</Reveal></div>

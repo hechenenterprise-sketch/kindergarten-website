@@ -37,3 +37,14 @@ Footer 固定：© 2026 米堤爾幼兒園｜Website by HECHEN DIGITAL。
 - Sanity 公開理念與聯絡內容已載入；目前 hero/about 照片缺省、課程列表為空，使用設計佔位與空內容提示。
 - Sanity schema 與後台內容未變更。原主分支保持乾淨。
 - 預覽：http://localhost:3002（限此電腦的本機服務）。
+
+## 預留模組（保持關閉）
+保留以下可啟用模組，不以空白區塊或隱藏 HTML 預留：
+- 最新消息：主視覺之後、關於我們之前，採雜誌式消息列表。
+- 活動相簿：課程之後、招生簡章之前，沿用既有燈箱。
+- 師資團隊：招生簡章之後、聯絡之前，採圓形照片與介紹。
+- 園務登入：独立的導覽開關，既有登入頁與 Studio 保留。
+
+開關集中於 lib/site-mode.ts：showNews、showGallery、showTeachers、showAdminLogin，目前均為 false。桌機與手機導覽共用 site-navigation，同步依開關顯示。消息列表、詳細頁及 sitemap 沿用同一 showNews 設定。
+
+模組在查詢 Sanity 前先檢查開關；關閉時不查詢、不生成 DOM、不傳送內容、不保留頁面空隙。未開啟任何隱藏資料。
