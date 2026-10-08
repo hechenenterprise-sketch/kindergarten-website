@@ -47,3 +47,9 @@
 .map-panel{border-radius:48% 52% 49% 51%/44% 45% 55% 56%;overflow:hidden;background:transparent;box-shadow:0 0 35px 14px #f5dce92a}
 .map-panel iframe{mask-image:radial-gradient(ellipse at center,#000 58%,#000d 63%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse at center,#000 58%,#000d 63%,transparent 75%);mask-size:100% 100%;-webkit-mask-size:100% 100%;mask-position:center;-webkit-mask-position:center}
 @media(max-width:800px){.map-panel{border-radius:48% 52% 49% 51%/44% 45% 55% 56%}.map-panel iframe{mask-image:radial-gradient(ellipse at center,#000 58%,#000d 63%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse at center,#000 58%,#000d 63%,transparent 75%)}}
+/* Circular map and a translucent pink story card. */
+.map-panel{aspect-ratio:1;min-height:0;align-self:center;border-radius:50%;overflow:hidden;box-shadow:0 0 32px 12px #f5dce92a}
+.map-panel iframe{height:100%;min-height:0;aspect-ratio:1;mask-image:radial-gradient(circle at center,#000 58%,#000d 64%,transparent 73%);-webkit-mask-image:radial-gradient(circle at center,#000 58%,#000d 64%,transparent 73%)}
+.about-copy{position:relative;padding:34px 36px;background:#f9dce34d;border:1px solid #edcbd655;border-radius:26px;box-shadow:0 10px 32px #c98f9f08;backdrop-filter:blur(3px)}
+.about-grid{gap:50px;align-items:center}
+@media(max-width:800px){.map-panel{aspect-ratio:1;min-height:0;border-radius:50%}.map-panel iframe{height:100%;min-height:0;aspect-ratio:1;mask-image:radial-gradient(circle at center,#000 58%,#000d 64%,transparent 73%);-webkit-mask-image:radial-gradient(circle at center,#000 58%,#000d 64%,transparent 73%)}.about-copy{padding:25px 23px;border-radius:22px}.about-grid{gap:30px}}
