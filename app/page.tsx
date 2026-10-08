@@ -58,7 +58,7 @@ export default async function Home() {
         <h1>{home?.title || "陪伴孩子探索世界"}<span>{home?.highlightTitle || "快樂學習，自信成長"}</span></h1>
         <p className="hero-description">{home?.description || "我們提供溫暖、安全且充滿創意的學習環境，陪伴每一位孩子探索興趣、建立自信，留下珍貴而快樂的童年回憶。"}</p>
         <a href="#contact" className="pill-button">{home?.primaryButtonText || "立即預約參觀"}<ArrowUpRight size={18}/></a>
-        <div className="hero-trust"><span>合法立案</span><i/><span>專業幼教</span><i/><span>安心成長</span></div>
+        <div className="hero-trust"><span><span aria-hidden="true">✓</span> 合法立案</span><span><span aria-hidden="true">✓</span> 專業幼教</span><span><span aria-hidden="true">✓</span> 安心成長</span></div>
       </div>
       <div className="hero-art"><svg className="growth-path" viewBox="0 0 520 520" fill="none" aria-hidden="true"><path d="M45 355C15 245 30 80 205 60S495 140 435 270S335 425 470 460"/><circle cx="205" cy="60" r="6"/><circle cx="435" cy="270" r="6"/></svg>
         <span className="art-note">讓好奇心，慢慢發芽。</span><GardenSprig className="photo-leaf"/><div className="orb orb-yellow"/><div className="orb orb-green"/>

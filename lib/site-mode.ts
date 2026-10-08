@@ -1,4 +1,5 @@
-export const isFullPreview = process.env.NODE_ENV === "development" && process.env.NEXT_PUBLIC_MITER_FULL_PREVIEW === "true";
+export const isFullPreview = process.env.NEXT_PUBLIC_MITER_FULL_PREVIEW === "true" &&
+  (process.env.NODE_ENV === "development" || process.env.NEXT_PUBLIC_MITER_PREVIEW_TARGET === "preview");
 
 export const publicSiteConfig = {
   showNews: isFullPreview,

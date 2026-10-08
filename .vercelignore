@@ -1,0 +1,5 @@
+.env*
+.git
+node_modules
+.next
+MITER-2.0-PLAN.md
