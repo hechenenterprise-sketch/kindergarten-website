@@ -14,7 +14,7 @@ export const newsBySlugQuery = defineQuery(`
 `);
 
 export const latestNewsQuery = defineQuery(`
-  *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc)[0...3] {
+  *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc)[0...8] {
     _id,
     title,
     "slug": coalesce(slug.current, _id),
