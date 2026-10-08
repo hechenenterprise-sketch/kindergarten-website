@@ -10,7 +10,9 @@ import {publicSiteConfig} from "@/lib/site-mode";
 import {client} from "@/sanity/lib/client";
 import {aboutSettingsQuery, brochureQuery, contactSettingsQuery, coursesQuery, homeSettingsQuery} from "@/sanity/lib/queries";
 import {urlFor} from "@/sanity/lib/image";
+import {GardenFlower, GardenSprig, GardenSun, StoryCurve} from "@/components/GardenDecor";
 import "./miter.css";
+import "./garden.css";
 
 export const revalidate = 0;
 type SanityImage = Parameters<typeof urlFor>[0];
@@ -26,7 +28,7 @@ function formatMultilineText(value: string) {
 
 function CirclePhoto({image, alt, className = "", priority = false}: {image?: SanityImage; alt: string; className?: string; priority?: boolean}) {
   return <div className={`circle-photo ${className}`}>
-    {image ? <Image src={urlFor(image).width(800).height(800).fit("crop").auto("format").url()} alt={alt} fill sizes="(max-width: 700px) 60vw, 340px" priority={priority} /> : <div className="photo-placeholder" role="img" aria-label={`${alt}，照片佔位`}><Sprout size={48} strokeWidth={1} /><span>每一天，都在慢慢長大</span></div>}
+    {image ? <Image src={urlFor(image).width(800).height(800).fit("crop").auto("format").url()} alt={alt} fill sizes="(max-width: 700px) 60vw, 340px" priority={priority} /> : <div className="photo-placeholder" role="img" aria-label={`${alt}，照片佔位`}><span className="placeholder-caption">{alt}</span></div>}
   </div>;
 }
 
@@ -51,38 +53,38 @@ export default async function Home() {
       <Link href="/" className="brand" aria-label="米堤爾幼兒園首頁"><Image src="/miter-logo.png" alt="米堤爾幼兒園" width={150} height={90} priority /><span>米堤爾幼兒園<small>MITER KINDERGARTEN</small></span></Link>
       <nav className="desktop-nav" aria-label="主要選單">{siteNavigation.map(item => <Link key={item.href} href={item.href} className={item.href === "#contact" ? "nav-contact" : undefined}>{item.label}{item.href === "#contact" && <ArrowUpRight size={15}/>}</Link>)}</nav><MobileMenu />
     </div></header>
-    <section id="main-content" className="hero page-width">
+    <section id="main-content" className="hero page-width"><StoryCurve/><GardenSun className="hero-sun"/><GardenFlower className="hero-flower"/><GardenSprig className="hero-leaf"/>
       <div className="hero-copy"><p className="eyebrow"><span className="tiny-dot"/>{home?.eyebrow || "MITER · A PLACE TO GROW"}</p>
         <h1>{home?.title || "陪伴孩子探索世界"}<span>{home?.highlightTitle || "快樂學習，自信成長"}</span></h1>
         <p className="hero-description">{home?.description || "我們提供溫暖、安全且充滿創意的學習環境，陪伴每一位孩子探索興趣、建立自信，留下珍貴而快樂的童年回憶。"}</p>
         <a href="#contact" className="pill-button">{home?.primaryButtonText || "立即預約參觀"}<ArrowUpRight size={18}/></a>
         <div className="hero-trust"><span>合法立案</span><i/><span>專業幼教</span><i/><span>安心成長</span></div>
       </div>
-      <div className="hero-art"><svg className="growth-path" viewBox="0 0 520 520" fill="none" aria-hidden="true"><path d="M20 440C190 500 20 210 190 240S400 420 450 240 370 70 505 35"/><circle cx="190" cy="240" r="6"/><circle cx="450" cy="240" r="6"/></svg>
-        <span className="art-note">讓好奇心，慢慢發芽。</span><div className="orb orb-yellow"/><div className="orb orb-green"/>
+      <div className="hero-art"><svg className="growth-path" viewBox="0 0 520 520" fill="none" aria-hidden="true"><path d="M45 355C15 245 30 80 205 60S495 140 435 270S335 425 470 460"/><circle cx="205" cy="60" r="6"/><circle cx="435" cy="270" r="6"/></svg>
+        <span className="art-note">讓好奇心，慢慢發芽。</span><GardenSprig className="photo-leaf"/><div className="orb orb-yellow"/><div className="orb orb-green"/>
         <CirclePhoto image={home?.heroImage} alt="米堤爾幼兒園的學習時光" className="hero-photo" priority/>
         <CirclePhoto image={about?.image} alt={about?.title || "認識米堤爾幼兒園"} className="hero-small-photo"/>
-        <span className="art-caption">Little moments.<br/><em>Beautiful beginnings.</em></span><span className="sparkle" aria-hidden="true">✳</span>
+        <CirclePhoto image={courses.find(course => course.image)?.image} alt="探索的每一天" className="hero-third-photo"/><span className="art-caption">Every little moment<br/><em>matters.</em></span><span className="sparkle" aria-hidden="true">✳</span>
       </div>
       <a className="scroll-note" href="#about"><ArrowDown size={15}/> 往下，認識我們 <span>01 / 開始探索</span></a>
     </section>
     <NewsSection/>
     <div className="chapter-divider page-width"><span>陪伴</span><span className="divider-star">✳</span><span>探索</span><span className="divider-star">✳</span><span>成長</span><small>EVERY CHILD, THEIR OWN PACE.</small></div>
-    <section id="about" className="about-section page-width">
+    <section id="about" className="about-section page-width"><StoryCurve/><GardenFlower className="about-flower"/><GardenSprig className="about-leaf"/>
       <Reveal className="section-label"><span>01</span><p>{about?.eyebrow || "ABOUT MITER"}<small>關於米堤爾</small></p></Reveal>
-      <div className="about-grid"><Reveal className="about-visual"><CirclePhoto image={about?.image} alt={about?.title || "認識米堤爾幼兒園"}/><div className="experience-note"><strong>{about?.experienceYears || "15+"}</strong><span>{about?.experienceLabel || "年幼教經驗"}</span></div><p className="photo-caption">在愛與尊重中，找到自己的成長節奏。</p></Reveal>
+      <div className="about-grid"><Reveal className="about-visual"><CirclePhoto image={about?.image} alt={about?.title || "認識米堤爾幼兒園"}/><div className="experience-note"><strong>{about?.experienceYears || "15+"}</strong><span>{about?.experienceLabel || "年幼教經驗"}</span></div><CirclePhoto image={courses.find(course => course.image)?.image} alt="愛與陪伴" className="about-detail-photo"/><p className="photo-caption">在愛與尊重中，找到自己的成長節奏。</p></Reveal>
         <Reveal className="about-copy"><h2>{about?.title || "認識米堤爾幼兒園"}</h2><p>{formatMultilineText(about?.description1 || "米堤爾幼兒園秉持著「陪伴、探索、成長」的教育理念，在充滿愛與尊重的環境中，陪伴孩子建立自信、培養良好的生活習慣，並透過多元課程激發創造力與學習興趣。")}</p><p>{formatMultilineText(about?.description2 || "我們相信，每位孩子都有屬於自己的成長節奏，老師扮演的是陪伴者與引導者，讓孩子在快樂中學習，在探索中成長。")}</p></Reveal></div>
-      <Reveal className="values-grid">{features.map((feature, index) => <article key={index}><span className="value-number">0{index + 1}</span><h3>{feature.title}</h3><p>{feature.description}</p></article>)}</Reveal>
+      <Reveal className="values-grid">{features.map((feature, index) => <article key={index}><span className="value-number" aria-hidden="true">{["♡", "❧", "⌂", "✧"][index]}</span><h3>{feature.title}</h3><p>{feature.description}</p></article>)}</Reveal>
     </section>
-    <section id="courses" className="courses-section"><div className="page-width">
+    <section id="courses" className="courses-section"><div className="page-width"><StoryCurve/><GardenSprig className="course-leaf"/><GardenSun className="course-sun"/>
       <Reveal className="section-label"><span>02</span><p>LEARNING & EXPLORING<small>課程介紹</small></p></Reveal>
       <Reveal className="section-heading"><h2>多元課程設計<span>讓探索，成為日常。</span></h2><p>依照不同年齡規劃適合孩子發展的學習內容，讓孩子在遊戲中學習，在探索中成長。</p></Reveal>
       <div className="course-grid">{courses.length ? courses.map((course, index) => <Reveal key={course._id} className="course-item"><article><div className="course-image"><CirclePhoto image={course.image} alt={course.title}/><span className="course-index">{String(index + 1).padStart(2, "0")}</span></div><span className="age-tag">{course.age || "適齡課程"}</span><h3>{course.title}</h3><p>{course.description || "培養生活自理、社交互動與快樂學習能力。"}</p></article></Reveal>) : <p className="empty-content">課程資訊準備中，歡迎聯絡園所了解更多。</p>}</div>
     </div></section>
     <GallerySection/>
-    <section id="enrollment" className="enrollment-section page-width"><Reveal className="enrollment-inner"><div><p className="eyebrow">03 / ENROLLMENT</p><h2>一起，翻開成長的下一頁。</h2><p>歡迎下載最新招生簡章，了解招生資訊、課程內容與入園方式。</p></div>{brochure?.pdfUrl ? <a href={brochure.pdfUrl} target="_blank" rel="noopener noreferrer" className="pill-button">{brochure.title || "下載招生簡章"}<ArrowUpRight size={18}/></a> : <a href="#contact" className="pill-button">洽詢招生資訊<ArrowUpRight size={18}/></a>}</Reveal></section>
+    <section id="enrollment" className="enrollment-section page-width"><GardenFlower className="enrollment-flower"/><Reveal className="enrollment-inner"><div><p className="eyebrow">03 / ENROLLMENT</p><h2>一起，翻開成長的下一頁。</h2><p>歡迎下載最新招生簡章，了解招生資訊、課程內容與入園方式。</p></div>{brochure?.pdfUrl ? <a href={brochure.pdfUrl} target="_blank" rel="noopener noreferrer" className="pill-button">{brochure.title || "下載招生簡章"}<ArrowUpRight size={18}/></a> : <a href="#contact" className="pill-button">洽詢招生資訊<ArrowUpRight size={18}/></a>}</Reveal></section>
     <TeachersSection/>
-    <section id="contact" className="contact-section page-width"><Reveal className="section-label"><span>04</span><p>COME SAY HELLO<small>聯絡我們</small></p></Reveal>
+    <section id="contact" className="contact-section page-width"><GardenSprig className="contact-leaf"/><Reveal className="section-label"><span>04</span><p>COME SAY HELLO<small>聯絡我們</small></p></Reveal>
       <div className="contact-grid"><Reveal><h2>歡迎預約參觀<span>米堤爾幼兒園</span></h2><p className="contact-description">{contact?.description || "歡迎家長來電或透過 LINE 與我們聯絡，了解招生資訊、課程內容與可預約參觀的時段。"}</p><dl className="contact-details"><div><dt>園所地址</dt><dd>{contact?.address || "歡迎聯絡園所洽詢"}</dd></div><div><dt>聯絡電話</dt><dd>{contact?.phone ? <a href={`tel:${contact.phone}`}>{contact.phone}</a> : "歡迎聯絡園所洽詢"}</dd></div><div><dt>服務時間</dt><dd>{contact?.serviceHours || "週一至週五 08:00～17:30"}</dd></div></dl><div className="contact-actions">{contact?.phone && <a className="pill-button" href={`tel:${contact.phone}`}><Phone size={16}/>電話諮詢</a>}{contact?.lineUrl && <a className="outline-button" href={contact.lineUrl} target="_blank" rel="noopener noreferrer">LINE 聯絡<ArrowUpRight size={16}/></a>}{contact?.facebookUrl && <a className="social-link" href={contact.facebookUrl} target="_blank" rel="noopener noreferrer">Facebook<ArrowUpRight size={15}/></a>}</div></Reveal>
         <Reveal className="map-panel">{contact?.googleMapEmbedUrl ? <iframe src={contact.googleMapEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="米堤爾幼兒園 Google 地圖"/> : <div className="map-placeholder"><Sprout size={45} strokeWidth={1}/><p>期待與你相見</p><span>歡迎聯絡園所預約參觀</span></div>}</Reveal></div>
     </section>

@@ -15,3 +15,22 @@
 @media(min-width:801px){.desktop-nav{gap:18px;font-size:12px}}
 @media(min-width:801px) and (max-width:1100px){.desktop-nav{display:none}.mobile-menu{display:block}.mobile-menu>button{display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;padding:10px}.mobile-menu nav{position:absolute;left:0;right:0;top:94px;background:var(--cream);padding:20px 32px;border-bottom:1px solid var(--line)}.mobile-menu nav a{display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid var(--line)}}
 @media(max-width:800px){.deferred-section{padding-block:40px}.news-row{flex-wrap:wrap;gap:12px}.news-row h3{flex-basis:calc(100% - 80px);font-size:14px}.news-row time{margin-left:auto}.teacher-grid{grid-template-columns:repeat(2,1fr);gap:25px}.teacher-grid h3{font-size:16px}.mobile-menu nav{max-height:calc(100dvh - 76px);overflow-y:auto}}
+/* Softer composition and a continuous cream palette across chapters. */
+.miter-site .circle-photo{background:transparent;box-shadow:none;overflow:visible}
+.miter-site .circle-photo img{border-radius:50%;mask-image:radial-gradient(circle,black 56%,#000d 63%,transparent 72%)}
+.miter-site .photo-placeholder{border-radius:50%;background:radial-gradient(circle,#e8eddd 0%,#eaf0e1 43%,#f4f5e9 60%,#fffdf700 73%)}
+.hero-photo::before{content:"";position:absolute;inset:-18px;background:radial-gradient(circle,#efd7df40,transparent 70%);z-index:-1;border-radius:50%}
+.miter-site .hero-small-photo{width:145px;right:0;bottom:50px;box-shadow:none}
+.hero-small-photo .photo-placeholder{background:radial-gradient(circle,#f1e4db 0%,#f7eee4 45%,#fffdf700 73%)}
+.hero-small-photo .photo-placeholder span{display:none}
+.hero-small-photo .photo-placeholder svg{color:#b49881;width:27px}
+.hero-small-photo::before{content:"";position:absolute;inset:-10px;background:radial-gradient(circle,#f4dce330,transparent 72%);z-index:-1;border-radius:50%}
+.art-note{transform:rotate(-3deg);color:#7e8d71;font-size:11px;letter-spacing:1.5px}
+.art-caption{bottom:15px;font-size:16px;line-height:1.7}.art-caption em{font-size:14px}
+.growth-path path{stroke:#c6cfb7;stroke-width:1}.growth-path circle{fill:#d6dec8}
+.orb-yellow{background:#f1dfae;width:43px;height:43px}.orb-green{background:#dce4cd;width:22px;height:22px}.sparkle{font-size:26px;color:#dcb0be}
+.courses-section{background:linear-gradient(180deg,var(--cream) 0%,#f5f6ed 22%,#f5f6ed 78%,var(--cream) 100%)}
+.enrollment-inner{background:radial-gradient(ellipse at 25% 50%,#faeff0 0%,#fcf6f2 60%,var(--cream) 100%);border-block:1px solid #eee7df;border-radius:0}
+.experience-note{background:#f1f2e6}.miter-footer{background:var(--cream)}
+@media(max-width:800px){.miter-site .hero-small-photo{width:115px;right:4%;bottom:35px}.art-caption{bottom:8px;font-size:14px}.art-caption em{font-size:12px}.orb-yellow{width:34px;height:34px}.orb-green{width:19px;height:19px}.sparkle{font-size:23px}}
+@media(max-width:380px){.miter-site .hero-small-photo{width:100px;bottom:30px}}
