@@ -63,3 +63,12 @@ Footer 固定：© 2026 米堤爾幼兒園｜Website by HECHEN DIGITAL。
 2026-10-09 已完成 Vercel Preview 建置，保留 Vercel 登入保護，未發布 production 或替換正式網址。
 改用清晰黑體區段標題；合法立案／專業幼教／安心成長放大並加勾；新增不同的蝴蝶、彩虹與雲朵線稿。
 完整內容開關僅在本機 development 或明確設定的 preview target 生效；未修改正式環境變數。
+
+## 2.0 正式上線
+2026-10-09 使用者明確授權後完成 production 部署。
+正式網址：https://kindergarten-website-red.vercel.app
+Deployment：dpl_49FwkshEWdXbWZ9Bw1BZf4NNXZ8k
+程式碼版本：b2b3923（redesign/miter-2.0）。
+正式部署明確關閉 NEXT_PUBLIC_MITER_FULL_PREVIEW，保留原公開形象網站範圍。首頁 200、新版樣式、頁尾與聯絡資訊已確認；消息、師資、相簿與登入入口不顯示，/news 與 /login 均 404。
+完整展示版仍保留：https://kindergarten-website-2hv5mv0p6-ch0217.vercel.app（Vercel 登入保護）。
+Sanity schema 與資料未修改。正式發布採獨立工作目錄，原 main checkout 未修改；改版程式碼保存在 redesign/miter-2.0 分支，未推送 GitHub。
