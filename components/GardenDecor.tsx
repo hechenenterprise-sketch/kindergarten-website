@@ -10,6 +10,11 @@ export function GardenSun({className = ""}: {className?: string}) {
   return <svg className={`garden-sun ${className}`} viewBox="0 0 100 100" fill="none" aria-hidden="true"><circle cx="50" cy="50" r="18"/><path d="M50 8V23M50 77V92M8 50H23M77 50H92M20 20L31 31M69 69L80 80M20 80L31 69M69 31L80 20"/></svg>;
 }
 
-export function StoryCurve({className = ""}: {className?: string}) {
-  return <svg className={`story-curve ${className}`} viewBox="0 0 1200 180" preserveAspectRatio="none" fill="none" aria-hidden="true"><path d="M-30 135C180 245 255 12 435 60S680 180 850 88S1065 82 1230 15"/></svg>;
+export function StoryCurve({className = "", variant = "hero"}: {className?: string; variant?: "hero" | "about" | "courses"}) {
+  const paths = {
+    hero: "M-30 155C190 175 240 15 410 38C585 60 680 170 855 105C1020 45 1110 85 1230 10",
+    about: "M-30 70C250 155 480 165 730 100C930 48 1070 55 1230 90",
+    courses: "M-30 140C140 155 220 50 355 72C490 95 500 155 655 120C790 90 870 20 1010 55C1110 85 1170 125 1230 90",
+  };
+  return <svg className={`story-curve story-curve-${variant} ${className}`} viewBox="0 0 1200 180" preserveAspectRatio="none" fill="none" aria-hidden="true"><path d={paths[variant]}/></svg>;
 }
