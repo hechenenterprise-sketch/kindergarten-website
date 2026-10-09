@@ -46,11 +46,18 @@ export const homeSettingsQuery = `
   title,
   highlightTitle,
   description,
-  readingFeatureImage,
-  readingFeatureTitle,
-  readingFeatureDescription,
   primaryButtonText,
   secondaryButtonText
+}
+`;
+
+export const featuredActivitiesQuery = `
+*[_type == "featuredActivity" && coalesce(isVisible, true) == true] | order(order asc, _createdAt asc){
+  _id,
+  title,
+  description,
+  image,
+  order
 }
 `;
 

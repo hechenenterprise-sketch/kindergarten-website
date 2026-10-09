@@ -164,12 +164,11 @@
 
 .hero-copy .eyebrow{font-family:var(--font-handwriting),"Segoe Print",cursive;color:#df869d;font-size:14px;letter-spacing:.5px;font-style:normal}
 
-/* Reading feature: keep the supplied collage intact and frame it as a curriculum story. */
-.reading-feature{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(280px,.95fr);align-items:center;gap:clamp(34px,6vw,78px);margin-top:75px;padding:34px;border-radius:34px;background:linear-gradient(135deg,#fffaf5e8,#f9e6eb99);box-shadow:0 18px 45px #9c6d7912}
-.reading-feature-media{position:relative;aspect-ratio:1536/1990;overflow:hidden;border-radius:28px 28px 110px 28px;background:#f7eee8}
-.reading-feature-media img{object-fit:cover;object-position:center bottom;transition:transform .8s ease}
-.reading-feature:hover .reading-feature-media img{transform:scale(1.015)}
-.reading-feature-copy .eyebrow{font-family:var(--font-handwriting),"Segoe Print",cursive;color:#df869d;font-size:16px;letter-spacing:.5px;font-style:normal}
-.reading-feature-copy h3{margin:16px 0;font-family:Georgia,"PMingLiU","Noto Serif TC",serif;font-size:clamp(25px,2.6vw,34px);font-weight:500;line-height:1.55;color:#4d4944}
-.reading-feature-copy>p:last-child{font-size:15px;line-height:2.15;color:#786e65}
-@media(max-width:800px){.reading-feature{grid-template-columns:1fr;margin-top:50px;padding:18px;gap:27px;border-radius:26px}.reading-feature-media{border-radius:22px 22px 78px 22px}.reading-feature-copy{padding:0 8px 10px}.reading-feature-copy .eyebrow{font-size:14px}.reading-feature-copy h3{margin:11px 0;font-size:25px}.reading-feature-copy>p:last-child{font-size:14px;line-height:2}}
+/* Compact, CMS-managed activity cards leave room for future additions. */
+.featured-activities-heading{margin-top:70px;margin-bottom:28px}.featured-activities-heading .eyebrow{font-family:var(--font-handwriting),"Segoe Print",cursive;color:#df869d;font-size:16px;letter-spacing:.5px}.featured-activities-heading h2{font-size:28px}.featured-activities-heading h2 span{display:inline;margin-left:18px;color:#8b8177;font-family:Arial,"Microsoft JhengHei",sans-serif;font-size:14px;letter-spacing:0}
+.featured-activity-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.featured-activity-card{overflow:hidden;border:0;border-radius:26px;background:#fffaf6;box-shadow:0 13px 32px #9c6d7914;color:inherit;text-align:left;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease}
+.featured-activity-card:hover{transform:translateY(-5px);box-shadow:0 18px 38px #9c6d7924}.featured-activity-card:focus-visible{outline:2px solid var(--pink);outline-offset:5px}
+.featured-activity-image{position:relative;display:block;aspect-ratio:4/3;overflow:hidden;background:#f7eee8}.featured-activity-image img{object-fit:cover;object-position:center 58%;transition:transform .6s ease}.featured-activity-card:hover .featured-activity-image img{transform:scale(1.035)}
+.featured-activity-copy{display:flex;flex-direction:column;padding:21px 22px 23px}.featured-activity-copy small{color:#df869d;font-family:var(--font-handwriting),"Segoe Print",cursive;font-size:13px}.featured-activity-copy strong{margin-top:8px;font-family:Georgia,"PMingLiU","Noto Serif TC",serif;font-size:20px;font-weight:500;line-height:1.55}.featured-activity-copy>span{margin-top:9px;color:#786e65;font-size:13px;line-height:1.9}.featured-activity-copy em{margin-top:14px;color:#c87990;font-size:11px;font-style:normal}
+@media(max-width:800px){.featured-activities-heading{margin-top:50px;margin-bottom:22px}.featured-activities-heading h2{font-size:25px}.featured-activities-heading h2 span{display:block;margin:6px 0 0;font-size:13px}.featured-activity-grid{grid-template-columns:1fr;gap:20px}.featured-activity-card{border-radius:22px}.featured-activity-image{aspect-ratio:16/10}.featured-activity-copy{padding:18px 19px 20px}.featured-activity-copy strong{font-size:19px}}

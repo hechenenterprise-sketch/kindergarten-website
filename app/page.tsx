@@ -5,11 +5,12 @@ import MobileMenu from "@/components/MobileMenu";
 import BackToTop from "@/components/BackToTop";
 import ViewCounter from "@/components/ViewCounter";
 import Reveal from "@/components/Reveal";
+import FeaturedActivities, {type FeaturedActivityItem} from "@/components/FeaturedActivities";
 import {NewsSection, GallerySection, TeachersSection} from "@/components/DeferredSections";
 import {siteNavigation} from "@/lib/site-navigation";
 import {publicSiteConfig} from "@/lib/site-mode";
 import {client} from "@/sanity/lib/client";
-import {aboutSettingsQuery, brochureQuery, contactSettingsQuery, coursesQuery, homeSettingsQuery} from "@/sanity/lib/queries";
+import {aboutSettingsQuery, brochureQuery, contactSettingsQuery, coursesQuery, featuredActivitiesQuery, homeSettingsQuery} from "@/sanity/lib/queries";
 import {urlFor} from "@/sanity/lib/image";
 import {GardenSprig, GardenSun, SakuraBlossom, SakuraBranch, StoryCurve} from "@/components/GardenDecor";
 import {LittleCloud, Rainbow} from "@/components/GardenAccents";
@@ -18,11 +19,12 @@ import "./garden.css";
 
 export const revalidate = 0;
 type SanityImage = Parameters<typeof urlFor>[0];
-type HomeSettings = {heroImage?: SanityImage; heroSecondaryImage?: SanityImage; heroTertiaryImage?: SanityImage; eyebrow?: string; title?: string; highlightTitle?: string; description?: string; readingFeatureImage?: SanityImage; readingFeatureTitle?: string; readingFeatureDescription?: string; primaryButtonText?: string};
+type HomeSettings = {heroImage?: SanityImage; heroSecondaryImage?: SanityImage; heroTertiaryImage?: SanityImage; eyebrow?: string; title?: string; highlightTitle?: string; description?: string; primaryButtonText?: string};
 type AboutSettings = {image?: SanityImage; detailImage?: SanityImage; eyebrow?: string; title?: string; description1?: string; description2?: string; experienceYears?: string; experienceLabel?: string; feature1Title?: string; feature1Description?: string; feature2Title?: string; feature2Description?: string; feature3Title?: string; feature3Description?: string; feature4Title?: string; feature4Description?: string};
 type Course = {_id: string; title: string; age?: string; description?: string; image?: SanityImage};
 type Contact = {address?: string; phone?: string; email?: string; serviceHours?: string; lineUrl?: string; facebookUrl?: string; googleMapEmbedUrl?: string; description?: string};
 type Brochure = {title?: string; pdfUrl?: string};
+type FeaturedActivity = {_id: string; title: string; description?: string; image?: SanityImage};
 
 function formatMultilineText(value: string) {
   return value.replace(/\u3000/g, " ").split(/\r?\n/).map((line) => line.trim()).join("\n").trim();
@@ -36,13 +38,16 @@ function CirclePhoto({image, alt, className = "", priority = false}: {image?: Sa
 
 export default async function Home() {
   // Hidden collections never enter the public page payload.
-  const [home, about, courses, contact, brochure] = await Promise.all([
+  const [home, about, courses, featuredActivities, contact, brochure] = await Promise.all([
     client.fetch<HomeSettings | null>(homeSettingsQuery).catch(() => null),
     client.fetch<AboutSettings | null>(aboutSettingsQuery).catch(() => null),
     client.fetch<Course[]>(coursesQuery).catch(() => []),
+    client.fetch<FeaturedActivity[]>(featuredActivitiesQuery).catch(() => []),
     client.fetch<Contact | null>(contactSettingsQuery).catch(() => null),
     client.fetch<Brochure | null>(brochureQuery).catch(() => null),
   ]);
+  const activityCards: FeaturedActivityItem[] = featuredActivities.flatMap((activity) => activity.image ? [{id: activity._id, imageUrl: urlFor(activity.image).width(1400).auto("format").url(), title: activity.title, description: activity.description || "記錄孩子在體驗中探索、學習與成長的每一刻。"}] : []);
+  if (!activityCards.length) activityCards.push({id: "mobile-library", imageUrl: "/images/mobile-library.jpg", title: "閱讀探索｜行動圖書車", description: "透過行動圖書車與多元繪本閱讀，引導孩子親近書本，在故事中培養想像力、表達力與閱讀興趣。"});
   const features = [
     {title: about?.feature1Title || "愛與陪伴", description: about?.feature1Description || "建立孩子安全感與自信心。"},
     {title: about?.feature2Title || "快樂探索", description: about?.feature2Description || "鼓勵孩子主動學習與探索世界。"},
@@ -82,7 +87,8 @@ export default async function Home() {
       <Reveal className="section-label"><SakuraBlossom className="section-sakura"/><p>LEARNING & EXPLORING<small>課程介紹</small></p></Reveal>
       <Reveal className="section-heading"><h2>多元課程設計<span>讓探索，成為日常。</span></h2><p>依照不同年齡規劃適合孩子發展的學習內容，讓孩子在遊戲中學習，在探索中成長。</p></Reveal>
       <div className="course-grid">{courses.length ? courses.map((course, index) => <Reveal key={course._id} className="course-item"><article><div className="course-image"><CirclePhoto image={course.image} alt={course.title}/><span className="course-index">{String(index + 1).padStart(2, "0")}</span></div><span className="age-tag">{course.age || "適齡課程"}</span><h3>{course.title}</h3><p>{course.description || "培養生活自理、社交互動與快樂學習能力。"}</p></article></Reveal>) : <p className="empty-content">課程資訊準備中，歡迎聯絡園所了解更多。</p>}</div>
-      <Reveal className="reading-feature"><div className="reading-feature-media">{home?.readingFeatureImage ? <Image src={urlFor(home.readingFeatureImage).width(1200).auto("format").url()} alt={home.readingFeatureTitle || "閱讀探索與行動圖書車"} fill sizes="(max-width: 800px) 100vw, 48vw"/> : <Image src="/images/mobile-library.jpg" alt="孩子參與彰化縣行動圖書車閱讀活動" fill sizes="(max-width: 800px) 100vw, 48vw"/>}</div><div className="reading-feature-copy"><p className="eyebrow">READING & DISCOVERY</p><h3>{home?.readingFeatureTitle || "閱讀探索｜行動圖書車"}</h3><p>{home?.readingFeatureDescription || "透過行動圖書車與多元繪本閱讀，引導孩子親近書本，在故事中培養想像力、表達力與閱讀興趣。"}</p></div></Reveal>
+      <Reveal className="featured-activities-heading"><p className="eyebrow">FEATURED ACTIVITIES</p><h2>特色活動<span>在每一次體驗中，遇見成長。</span></h2></Reveal>
+      <FeaturedActivities items={activityCards}/>
     </div></section>
     <GallerySection/>
     <section id="enrollment" className="enrollment-section page-width"><LittleCloud/><SakuraBranch className="enrollment-sakura" variant="cascade"/><Reveal className="enrollment-inner"><div><div className="section-label enrollment-label"><SakuraBlossom className="section-sakura"/><p>ENROLLMENT</p></div><h2>一起，翻開成長的下一頁。</h2><p>歡迎下載最新招生簡章，了解招生資訊、課程內容與入園方式。</p></div>{brochure?.pdfUrl ? <a href={brochure.pdfUrl} target="_blank" rel="noopener noreferrer" className="pill-button">{brochure.title || "下載招生簡章"}</a> : <a href="#contact" className="pill-button">洽詢招生資訊</a>}</Reveal></section>

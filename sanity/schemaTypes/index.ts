@@ -8,6 +8,7 @@ import {teacher} from "./teacher";
 import {aboutSettings} from "./aboutSettings";
 import {brochure} from "./brochure";
 import {siteViewCount} from "./siteViewCount";
+import {featuredActivity} from "./featuredActivity";
 
 export const schema = {
   types: [
@@ -17,6 +18,7 @@ export const schema = {
     contactSettings,
     news,
     course,
+    featuredActivity,
     teacher,
     gallery,
     brochure,
