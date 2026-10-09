@@ -153,3 +153,7 @@
 @media(prefers-reduced-motion:reduce){
   .circle-photo,.garden-sprig,.garden-sun,.sakura-branch,.garden-accent,.back-to-top-flower,.story-curve path{animation:none!important;transition:none!important;translate:none!important}
 }
+
+/* Alternate the homepage photo washes: pink large circle, green middle circle. */
+.miter-site .hero-photo .photo-placeholder{background:radial-gradient(circle,#f3d7df 0%,#f3d7df 53%,#f6e2e5aa 63%,transparent 73%)}
+.miter-site .hero-small-photo .photo-placeholder{background:radial-gradient(circle,#e2e8d4 0%,#e2e8d4 53%,#e8eddcaa 63%,transparent 73%)}
