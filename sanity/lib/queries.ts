@@ -86,6 +86,7 @@ export const contactSettingsQuery = `
 *[_type == "contactSettings"][0]{
   address,
   phone,
+  email,
   serviceHours,
   lineUrl,
   facebookUrl,

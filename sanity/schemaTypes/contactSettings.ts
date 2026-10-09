@@ -19,6 +19,14 @@ export const contactSettings = defineType({
     }),
 
     defineField({
+      name: "email",
+      title: "電子信箱",
+      type: "email",
+      initialValue: "miterschool@yahoo.com.tw",
+      description: "家長點擊網站上的信箱後，可直接開啟寄信功能。",
+    }),
+
+    defineField({
       name: "serviceHours",
       title: "服務時間",
       type: "string",
