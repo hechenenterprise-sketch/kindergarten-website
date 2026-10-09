@@ -5,7 +5,8 @@ export const publicSiteConfig = {
   showNews: isFullPreview,
   showGallery: isFullPreview,
   showTeachers: isFullPreview,
-  showAdminLogin: isFullPreview,
+  // 園務登入是園方日常管理入口，正式形象網站也必須保留。
+  showAdminLogin: true,
   informationNotice:
     "本網站為園所形象與資訊展示使用，重要通知請以園方正式通知為準。",
 } as const;
