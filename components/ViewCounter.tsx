@@ -1,6 +1,7 @@
 "use client";
 
 import {useEffect, useState} from "react";
+import {Eye} from "lucide-react";
 
 let hasCountedThisPageLoad = false;
 
@@ -23,11 +24,11 @@ export default function ViewCounter() {
       .catch(() => setCount(null));
   }, []);
 
-  if (count === null) return null;
-
   return (
-    <p className="whitespace-nowrap text-[11px] text-slate-400 sm:text-xs">
-      瀏覽次數：{count.toLocaleString("zh-TW")}
+    <p className="view-counter" aria-live="polite">
+      <Eye size={14} aria-hidden="true" />
+      <span>瀏覽次數</span>
+      <strong>{count === null ? "—" : count.toLocaleString("zh-TW")}</strong>
     </p>
   );
 }

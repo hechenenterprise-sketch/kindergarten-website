@@ -10,6 +10,28 @@ export function GardenSun({className = ""}: {className?: string}) {
   return <svg className={`garden-sun ${className}`} viewBox="0 0 100 100" fill="none" aria-hidden="true"><circle cx="50" cy="50" r="18"/><path d="M50 8V23M50 77V92M8 50H23M77 50H92M20 20L31 31M69 69L80 80M20 80L31 69M69 31L80 20"/></svg>;
 }
 
+export function SakuraBlossom({className = ""}: {className?: string}) {
+  return <svg className={`sakura-blossom ${className}`} viewBox="0 0 64 64" aria-hidden="true">
+    <g className="sakura-petals">
+      <ellipse cx="32" cy="15" rx="8" ry="13"/>
+      <ellipse cx="48" cy="27" rx="8" ry="13" transform="rotate(72 48 27)"/>
+      <ellipse cx="42" cy="47" rx="8" ry="13" transform="rotate(144 42 47)"/>
+      <ellipse cx="22" cy="47" rx="8" ry="13" transform="rotate(216 22 47)"/>
+      <ellipse cx="16" cy="27" rx="8" ry="13" transform="rotate(288 16 27)"/>
+    </g>
+    <circle className="sakura-center" cx="32" cy="32" r="5"/>
+  </svg>;
+}
+
+export function SakuraBranch({className = ""}: {className?: string}) {
+  return <svg className={`sakura-branch ${className}`} viewBox="0 0 180 110" fill="none" aria-hidden="true">
+    <path className="sakura-stem" d="M8 93C48 85 61 55 91 49C119 43 137 54 172 16M54 68C48 53 43 44 32 35M101 48C111 34 116 26 127 18"/>
+    <g transform="translate(25 22) scale(.43)"><SakuraBlossom/></g>
+    <g transform="translate(75 31) scale(.34)"><SakuraBlossom/></g>
+    <g transform="translate(117 1) scale(.5)"><SakuraBlossom/></g>
+  </svg>;
+}
+
 export function StoryCurve({className = "", variant = "hero"}: {className?: string; variant?: "hero" | "about" | "courses"}) {
   const paths = {
     hero: "M-30 155C190 175 240 15 410 38C585 60 680 170 855 105C1020 45 1110 85 1230 10",
