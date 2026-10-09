@@ -12,7 +12,7 @@ import {client} from "@/sanity/lib/client";
 import {aboutSettingsQuery, brochureQuery, contactSettingsQuery, coursesQuery, homeSettingsQuery} from "@/sanity/lib/queries";
 import {urlFor} from "@/sanity/lib/image";
 import {GardenSprig, GardenSun, SakuraBlossom, SakuraBranch, StoryCurve} from "@/components/GardenDecor";
-import {LittleCloud} from "@/components/GardenAccents";
+import {LittleCloud, Rainbow} from "@/components/GardenAccents";
 import "./miter.css";
 import "./garden.css";
 
@@ -78,7 +78,7 @@ export default async function Home() {
         <Reveal className="about-copy"><h2>{about?.title || "認識米堤爾幼兒園"}</h2><p>{formatMultilineText(about?.description1 || "米堤爾幼兒園秉持著「陪伴、探索、成長」的教育理念，在充滿愛與尊重的環境中，陪伴孩子建立自信、培養良好的生活習慣，並透過多元課程激發創造力與學習興趣。")}</p><p>{formatMultilineText(about?.description2 || "我們相信，每位孩子都有屬於自己的成長節奏，老師扮演的是陪伴者與引導者，讓孩子在快樂中學習，在探索中成長。")}</p></Reveal></div>
       <Reveal className="values-grid">{features.map((feature, index) => <article key={index}><span className="value-number" aria-hidden="true">{["♡", "❧", "⌂", "✧"][index]}</span><h3>{feature.title}</h3><p>{feature.description}</p></article>)}</Reveal>
     </section>
-    <section id="courses" className="courses-section"><div className="page-width"><StoryCurve variant="courses"/><GardenSprig className="course-leaf"/><GardenSun className="course-sun"/>
+    <section id="courses" className="courses-section"><div className="page-width"><StoryCurve variant="courses"/><GardenSprig className="course-leaf"/><GardenSun className="course-sun"/><Rainbow/>
       <Reveal className="section-label"><SakuraBlossom className="section-sakura"/><p>LEARNING & EXPLORING<small>課程介紹</small></p></Reveal>
       <Reveal className="section-heading"><h2>多元課程設計<span>讓探索，成為日常。</span></h2><p>依照不同年齡規劃適合孩子發展的學習內容，讓孩子在遊戲中學習，在探索中成長。</p></Reveal>
       <div className="course-grid">{courses.length ? courses.map((course, index) => <Reveal key={course._id} className="course-item"><article><div className="course-image"><CirclePhoto image={course.image} alt={course.title}/><span className="course-index">{String(index + 1).padStart(2, "0")}</span></div><span className="age-tag">{course.age || "適齡課程"}</span><h3>{course.title}</h3><p>{course.description || "培養生活自理、社交互動與快樂學習能力。"}</p></article></Reveal>) : <p className="empty-content">課程資訊準備中，歡迎聯絡園所了解更多。</p>}</div>
