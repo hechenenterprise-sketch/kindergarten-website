@@ -68,6 +68,32 @@ export const homeSettings = defineType({
     }),
 
     defineField({
+      name: "readingFeatureImage",
+      title: "閱讀探索特色照片",
+      description: "顯示於多元課程下方的行動圖書車特色區塊。",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
+    }),
+
+    defineField({
+      name: "readingFeatureTitle",
+      title: "閱讀探索標題",
+      type: "string",
+      initialValue: "閱讀探索｜行動圖書車",
+    }),
+
+    defineField({
+      name: "readingFeatureDescription",
+      title: "閱讀探索介紹",
+      type: "text",
+      rows: 3,
+      initialValue:
+        "透過行動圖書車與多元繪本閱讀，引導孩子親近書本，在故事中培養想像力、表達力與閱讀興趣。",
+    }),
+
+    defineField({
       name: "primaryButtonText",
       title: "主要按鈕文字",
       type: "string",

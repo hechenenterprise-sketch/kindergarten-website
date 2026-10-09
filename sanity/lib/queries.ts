@@ -46,6 +46,9 @@ export const homeSettingsQuery = `
   title,
   highlightTitle,
   description,
+  readingFeatureImage,
+  readingFeatureTitle,
+  readingFeatureDescription,
   primaryButtonText,
   secondaryButtonText
 }
