@@ -161,3 +161,6 @@
 .enrollment-label{display:flex;align-items:center;gap:12px}
 .enrollment-label .eyebrow{margin:0}
 .enrollment-label:hover .section-sakura{transform:rotate(8deg) scale(1.12);filter:drop-shadow(0 5px 7px #e99caf66)}
+
+.hero-copy .eyebrow{font-family:var(--font-handwriting),"Segoe Print",cursive;font-style:italic}
+@media(max-width:800px){.enrollment-label{margin-left:-20px}}
