@@ -18,8 +18,8 @@ import "./garden.css";
 
 export const revalidate = 0;
 type SanityImage = Parameters<typeof urlFor>[0];
-type HomeSettings = {heroImage?: SanityImage; eyebrow?: string; title?: string; highlightTitle?: string; description?: string; primaryButtonText?: string};
-type AboutSettings = {image?: SanityImage; eyebrow?: string; title?: string; description1?: string; description2?: string; experienceYears?: string; experienceLabel?: string; feature1Title?: string; feature1Description?: string; feature2Title?: string; feature2Description?: string; feature3Title?: string; feature3Description?: string; feature4Title?: string; feature4Description?: string};
+type HomeSettings = {heroImage?: SanityImage; heroSecondaryImage?: SanityImage; heroTertiaryImage?: SanityImage; eyebrow?: string; title?: string; highlightTitle?: string; description?: string; primaryButtonText?: string};
+type AboutSettings = {image?: SanityImage; detailImage?: SanityImage; eyebrow?: string; title?: string; description1?: string; description2?: string; experienceYears?: string; experienceLabel?: string; feature1Title?: string; feature1Description?: string; feature2Title?: string; feature2Description?: string; feature3Title?: string; feature3Description?: string; feature4Title?: string; feature4Description?: string};
 type Course = {_id: string; title: string; age?: string; description?: string; image?: SanityImage};
 type Contact = {address?: string; phone?: string; serviceHours?: string; lineUrl?: string; facebookUrl?: string; googleMapEmbedUrl?: string; description?: string};
 type Brochure = {title?: string; pdfUrl?: string};
@@ -65,8 +65,8 @@ export default async function Home() {
       <div className="hero-art"><svg className="growth-path" viewBox="0 0 520 520" fill="none" aria-hidden="true"><path d="M45 355C15 245 30 80 205 60S495 140 435 270S335 425 470 460"/><circle cx="205" cy="60" r="6"/><circle cx="435" cy="270" r="6"/></svg>
         <span className="art-note">讓好奇心，慢慢發芽。</span><GardenSprig className="photo-leaf"/><div className="orb orb-yellow"/><div className="orb orb-green"/>
         <CirclePhoto image={home?.heroImage} alt="米堤爾幼兒園的學習時光" className="hero-photo sakura-photo" priority/>
-        <CirclePhoto image={about?.image} alt={about?.title || "認識米堤爾幼兒園"} className="hero-small-photo"/>
-        <CirclePhoto image={courses.find(course => course.image)?.image} alt="探索的每一天" className="hero-third-photo"/><span className="art-caption">Every little moment<br/><em>matters.</em></span><SakuraBlossom className="sparkle sparkle-flower"/>
+        <CirclePhoto image={home?.heroSecondaryImage || about?.image} alt="陪伴成長的每一天" className="hero-small-photo"/>
+        <CirclePhoto image={home?.heroTertiaryImage || courses.find(course => course.image)?.image} alt="探索的每一天" className="hero-third-photo"/><span className="art-caption">Every little moment<br/><em>matters.</em></span><SakuraBlossom className="sparkle sparkle-flower"/>
       </div>
       <a className="scroll-note" href="#about"><ArrowDown size={15}/> 往下，認識我們 <span>01 / 開始探索</span></a>
     </section>
@@ -74,7 +74,7 @@ export default async function Home() {
     <div className="chapter-divider page-width"><span>陪伴</span><SakuraBlossom className="divider-sakura"/><span>探索</span><SakuraBlossom className="divider-sakura"/><span>成長</span><small>EVERY CHILD, THEIR OWN PACE.</small></div>
     <section id="about" className="about-section page-width"><StoryCurve variant="about"/><SakuraBranch className="about-sakura" variant="upright"/><GardenSprig className="about-leaf"/>
       <Reveal className="section-label"><SakuraBlossom className="section-sakura"/><p>{about?.eyebrow || "ABOUT MITER"}<small>關於米堤爾</small></p></Reveal>
-      <div className="about-grid"><Reveal className="about-visual"><CirclePhoto image={about?.image} alt={about?.title || "認識米堤爾幼兒園"} className="sakura-photo"/><div className="experience-note"><strong>{about?.experienceYears || "15+"}</strong><span>{about?.experienceLabel || "年幼教經驗"}</span></div><CirclePhoto image={courses.find(course => course.image)?.image} alt="愛與陪伴" className="about-detail-photo"/><p className="photo-caption">在愛與尊重中，找到自己的成長節奏。</p></Reveal>
+      <div className="about-grid"><Reveal className="about-visual"><CirclePhoto image={about?.image} alt={about?.title || "認識米堤爾幼兒園"} className="sakura-photo"/><div className="experience-note"><strong>{about?.experienceYears || "15+"}</strong><span>{about?.experienceLabel || "年幼教經驗"}</span></div><CirclePhoto image={about?.detailImage || courses.find(course => course.image)?.image} alt="愛與陪伴" className="about-detail-photo"/><p className="photo-caption">在愛與尊重中，找到自己的成長節奏。</p></Reveal>
         <Reveal className="about-copy"><h2>{about?.title || "認識米堤爾幼兒園"}</h2><p>{formatMultilineText(about?.description1 || "米堤爾幼兒園秉持著「陪伴、探索、成長」的教育理念，在充滿愛與尊重的環境中，陪伴孩子建立自信、培養良好的生活習慣，並透過多元課程激發創造力與學習興趣。")}</p><p>{formatMultilineText(about?.description2 || "我們相信，每位孩子都有屬於自己的成長節奏，老師扮演的是陪伴者與引導者，讓孩子在快樂中學習，在探索中成長。")}</p></Reveal></div>
       <Reveal className="values-grid">{features.map((feature, index) => <article key={index}><span className="value-number" aria-hidden="true">{["♡", "❧", "⌂", "✧"][index]}</span><h3>{feature.title}</h3><p>{feature.description}</p></article>)}</Reveal>
     </section>

@@ -8,7 +8,17 @@ export const aboutSettings = defineType({
   fields: [
     defineField({
       name: "image",
-      title: "介紹圖片",
+      title: "關於我們大圓照片",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
+    }),
+
+    defineField({
+      name: "detailImage",
+      title: "關於我們小圓照片",
+      description: "顯示在大圓照片旁邊的另一張圓形照片。",
       type: "image",
       options: {
         hotspot: true,

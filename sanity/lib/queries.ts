@@ -40,6 +40,8 @@ export const allNewsQuery = `
 export const homeSettingsQuery = `
 *[_type == "homeSettings"][0]{
   heroImage,
+  heroSecondaryImage,
+  heroTertiaryImage,
   eyebrow,
   title,
   highlightTitle,
@@ -95,6 +97,7 @@ export const contactSettingsQuery = `
 export const aboutSettingsQuery = `
 *[_type == "aboutSettings"][0]{
   image,
+  detailImage,
   eyebrow,
   title,
   description1,

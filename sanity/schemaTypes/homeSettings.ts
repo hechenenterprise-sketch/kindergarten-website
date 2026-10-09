@@ -8,12 +8,32 @@ export const homeSettings = defineType({
   fields: [
     defineField({
       name: "heroImage",
-      title: "首頁背景圖片",
+      title: "首頁大圓照片",
       type: "image",
       options: {
         hotspot: true,
       },
       validation: (rule) => rule.required(),
+    }),
+
+    defineField({
+      name: "heroSecondaryImage",
+      title: "首頁中圓照片",
+      description: "顯示在首頁照片區上方的圓形照片。",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
+    }),
+
+    defineField({
+      name: "heroTertiaryImage",
+      title: "首頁小圓照片",
+      description: "顯示在首頁照片區右側的圓形照片。",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
     }),
 
     defineField({
