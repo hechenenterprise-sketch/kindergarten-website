@@ -157,3 +157,7 @@
 /* Alternate the homepage photo washes: pink large circle, green middle circle. */
 .miter-site .hero-photo .photo-placeholder{background:radial-gradient(circle,#f3d7df 0%,#f3d7df 53%,#f6e2e5aa 63%,transparent 73%)}
 .miter-site .hero-small-photo .photo-placeholder{background:radial-gradient(circle,#e2e8d4 0%,#e2e8d4 53%,#e8eddcaa 63%,transparent 73%)}
+
+.enrollment-label{display:flex;align-items:center;gap:12px}
+.enrollment-label .eyebrow{margin:0}
+.enrollment-label:hover .section-sakura{transform:rotate(8deg) scale(1.12);filter:drop-shadow(0 5px 7px #e99caf66)}
