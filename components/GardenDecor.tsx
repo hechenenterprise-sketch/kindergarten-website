@@ -23,13 +23,31 @@ export function SakuraBlossom({className = ""}: {className?: string}) {
   </svg>;
 }
 
-export function SakuraBranch({className = ""}: {className?: string}) {
+export function SakuraBranch({className = "", variant = "sweep"}: {className?: string; variant?: "sweep" | "upright" | "cascade"}) {
+  if (variant === "upright") {
+    return <svg className={`sakura-branch ${className}`} viewBox="0 0 135 160" fill="none" aria-hidden="true">
+      <path className="sakura-stem" d="M28 153C34 119 60 103 58 75C57 49 45 32 58 8M56 91C79 82 93 65 101 45M57 60C39 57 26 47 17 35"/>
+      <g transform="translate(38 0) scale(.4)"><SakuraBlossom/></g>
+      <g transform="translate(86 28) scale(.47)"><SakuraBlossom/></g>
+      <g transform="translate(3 22) scale(.36)"><SakuraBlossom/></g>
+    </svg>;
+  }
+
+  if (variant === "cascade") {
+    return <svg className={`sakura-branch ${className}`} viewBox="0 0 190 125" fill="none" aria-hidden="true">
+      <path className="sakura-stem" d="M10 18C48 17 67 34 94 50C122 67 147 78 181 111M67 35C78 20 91 13 108 8M121 65C139 54 154 52 170 55"/>
+      <g transform="translate(35 17) scale(.48)"><SakuraBlossom/></g>
+      <g transform="translate(96 0) scale(.34)"><SakuraBlossom/></g>
+      <g transform="translate(151 43) scale(.42)"><SakuraBlossom/></g>
+    </svg>;
+  }
+
   return <svg className={`sakura-branch ${className}`} viewBox="0 0 180 110" fill="none" aria-hidden="true">
-    <path className="sakura-stem" d="M8 93C48 85 61 55 91 49C119 43 137 54 172 16M54 68C48 53 43 44 32 35M101 48C111 34 116 26 127 18"/>
-    <g transform="translate(25 22) scale(.43)"><SakuraBlossom/></g>
-    <g transform="translate(75 31) scale(.34)"><SakuraBlossom/></g>
-    <g transform="translate(117 1) scale(.5)"><SakuraBlossom/></g>
-  </svg>;
+      <path className="sakura-stem" d="M8 93C48 85 61 55 91 49C119 43 137 54 172 16M54 68C48 53 43 44 32 35M101 48C111 34 116 26 127 18"/>
+      <g transform="translate(25 22) scale(.43)"><SakuraBlossom/></g>
+      <g transform="translate(75 31) scale(.34)"><SakuraBlossom/></g>
+      <g transform="translate(117 1) scale(.5)"><SakuraBlossom/></g>
+    </svg>;
 }
 
 export function StoryCurve({className = "", variant = "hero"}: {className?: string; variant?: "hero" | "about" | "courses"}) {
