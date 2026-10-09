@@ -107,3 +107,49 @@
 .back-to-top .sakura-center{fill:#d95a7d}
 .back-to-top>span{position:relative;z-index:1;color:#fff;font-size:22px;line-height:1;transform:translateY(-1px)}
 @media(max-width:800px){.back-to-top{width:52px;height:52px}}
+
+/* Gentle interactions that preserve the existing layout. */
+.circle-photo{transition:transform .45s ease,box-shadow .45s ease,filter .45s ease}
+.circle-photo:active{transform:scale(.975)}
+.pill-button,.outline-button,.contact-icon,.mobile-menu>button{transition:transform .25s ease,box-shadow .25s ease,background-color .25s ease,color .25s ease}
+.pill-button:active,.outline-button:active,.contact-icon:active,.mobile-menu>button:active{transform:scale(.95)}
+.section-sakura,.divider-sakura{transition:transform .45s ease,filter .45s ease}
+.section-label:hover .section-sakura{transform:rotate(8deg) scale(1.12);filter:drop-shadow(0 5px 7px #e99caf66)}
+.chapter-divider:hover .divider-sakura{transform:rotate(-8deg) scale(1.08)}
+.garden-sprig{animation:gentle-sprig 6.5s ease-in-out infinite;transform-origin:50% 100%}
+.garden-sun{animation:sun-breathe 7s ease-in-out infinite}
+.sakura-branch{animation:sakura-float 8s ease-in-out infinite}
+.garden-accent{animation:accent-float 7.5s ease-in-out infinite}
+.little-cloud{animation-delay:-2.5s}
+.little-rainbow{animation-delay:-4s}
+
+@media(hover:hover){
+  .circle-photo:hover{transform:translateY(-7px) scale(1.015);box-shadow:0 12px 34px 14px #e4a8b833;filter:saturate(1.06)}
+  .circle-photo:hover img{transform:scale(1.075)}
+  .pill-button:hover,.outline-button:hover{box-shadow:0 9px 22px #d8749130}
+  .contact-icon:hover{transform:translateY(-4px) rotate(-4deg) scale(1.05)}
+  .back-to-top:hover .back-to-top-flower{animation:blossom-wave .65s ease}
+}
+
+@media(min-width:801px){
+  .hero-art .circle-photo{animation:photo-drift 7s ease-in-out infinite}
+  .hero-art .hero-small-photo{animation-delay:-2.2s}
+  .hero-art .hero-third-photo{animation-delay:-4.4s}
+  .hero-art .circle-photo:hover{animation-play-state:paused}
+}
+
+@supports (animation-timeline:view()){
+  .story-curve path{animation:draw-story linear both;animation-timeline:view();animation-range:entry 5% cover 42%}
+}
+
+@keyframes gentle-sprig{0%,100%{translate:0 0}50%{translate:2px -4px}}
+@keyframes sun-breathe{0%,100%{opacity:.72;translate:0 0}50%{opacity:1;translate:0 -3px}}
+@keyframes sakura-float{0%,100%{translate:0 0}50%{translate:3px -5px}}
+@keyframes accent-float{0%,100%{translate:0 0}50%{translate:0 -5px}}
+@keyframes photo-drift{0%,100%{translate:0 0}50%{translate:0 -5px}}
+@keyframes blossom-wave{0%{rotate:0deg}45%{rotate:10deg;scale:1.08}100%{rotate:0deg;scale:1}}
+@keyframes draw-story{from{stroke-dashoffset:1500;opacity:.3}to{stroke-dashoffset:0;opacity:.8}}
+
+@media(prefers-reduced-motion:reduce){
+  .circle-photo,.garden-sprig,.garden-sun,.sakura-branch,.garden-accent,.back-to-top-flower,.story-curve path{animation:none!important;transition:none!important;translate:none!important}
+}
