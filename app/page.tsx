@@ -5,6 +5,10 @@ import MobileMenu from "../components/MobileMenu";
 import GalleryLightbox from "../components/GalleryLightbox";
 import BackToTop from "../components/BackToTop";
 import ViewCounter from "../components/ViewCounter";
+import {
+  SakuraBlossom,
+  SakuraHeadingAccent,
+} from "../components/SakuraAccent";
 import NewsCategoryBadge, {
   type NewsCategory,
 } from "../components/NewsCategoryBadge";
@@ -350,7 +354,8 @@ export default async function Home() {
   <div className="grid gap-12 lg:grid-cols-2">
     <div className="self-start">
       <div className="relative">
-        <div className="relative min-h-[430px] overflow-hidden rounded-[36px] shadow-xl">
+        <SakuraBlossom className="absolute -left-3 -top-4 z-10 size-16 rotate-[-14deg] text-pink-200 drop-shadow-sm" />
+        <div className="relative min-h-[430px] overflow-hidden rounded-[48px_24px_48px_24px] border-2 border-pink-100 shadow-xl">
           {about?.image ? (
             <Image
               src={urlFor(about.image).width(1000).height(800).url()}
@@ -461,6 +466,8 @@ export default async function Home() {
         多元課程設計
       </h2>
 
+      <SakuraHeadingAccent />
+
       <p className="mx-auto mt-4 max-w-2xl leading-7 text-slate-600">
         依照不同年齡規劃適合孩子發展的學習內容，
         讓孩子在遊戲中學習，在探索中成長。
@@ -540,6 +547,8 @@ export default async function Home() {
         活動相簿
       </h2>
 
+      <SakuraHeadingAccent />
+
       <p className="mx-auto mt-4 max-w-2xl leading-7 text-slate-600">
         記錄孩子在課堂、節慶與戶外活動中的快樂時光。
       </p>
@@ -577,6 +586,8 @@ export default async function Home() {
       招生簡章
     </h2>
 
+    <SakuraHeadingAccent />
+
     <p className="mx-auto mt-4 max-w-2xl leading-7 text-slate-600">
       歡迎下載最新招生簡章，了解招生資訊、課程內容與入園方式。
     </p>
@@ -609,6 +620,8 @@ export default async function Home() {
       <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
         專業師資團隊
       </h2>
+
+      <SakuraHeadingAccent />
 
       <p className="mx-auto mt-4 max-w-2xl leading-7 text-slate-600">
         用專業、耐心與愛心，陪伴每一位孩子快樂學習、自信成長。

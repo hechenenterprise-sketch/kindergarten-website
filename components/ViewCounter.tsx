@@ -1,6 +1,7 @@
 "use client";
 
 import {useEffect, useState} from "react";
+import {Eye} from "lucide-react";
 
 let hasCountedThisPageLoad = false;
 
@@ -23,11 +24,13 @@ export default function ViewCounter() {
       .catch(() => setCount(null));
   }, []);
 
-  if (count === null) return null;
-
   return (
-    <p className="whitespace-nowrap text-[11px] text-slate-400 sm:text-xs">
-      瀏覽次數：{count.toLocaleString("zh-TW")}
+    <p
+      className="inline-flex whitespace-nowrap items-center gap-1 rounded-full bg-pink-50 px-2.5 py-1 text-[11px] font-medium text-[#b80660] ring-1 ring-pink-100 sm:text-xs"
+      aria-live="polite"
+    >
+      <Eye className="size-3.5" aria-hidden="true" />
+      瀏覽次數：{count === null ? "—" : count.toLocaleString("zh-TW")}
     </p>
   );
 }
