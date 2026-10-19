@@ -4,6 +4,19 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [{protocol: "https", hostname: "cdn.sanity.io", pathname: "/images/**"}],
   },
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow, noarchive, nosnippet, noimageindex",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

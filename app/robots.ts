@@ -4,10 +4,7 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
-      allow: "/",
-      disallow: ["/news", "/login", "/studio"],
+      disallow: "/",
     },
-    sitemap:
-      "https://kindergarten-website-red.vercel.app/sitemap.xml",
   };
 }

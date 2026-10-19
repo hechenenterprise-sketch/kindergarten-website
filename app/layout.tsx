@@ -21,6 +21,18 @@ const handwriting = Caveat({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://kindergarten-website-red.vercel.app"),
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+      noarchive: true,
+      nosnippet: true,
+    },
+  },
   
   title: "米堤爾幼兒園｜Miter Kindergarten",
   description:
