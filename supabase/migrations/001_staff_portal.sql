@@ -129,6 +129,17 @@ for select using (
   and public.current_staff_role() in ('owner', 'director')
 );
 
+-- The project disables automatic Data API grants. Grant only the minimum
+-- privileges needed by signed-in staff and the server-side management client.
+grant usage on schema public to authenticated, service_role;
+grant select on public.staff_profiles to authenticated;
+
+grant all privileges on table public.organizations to service_role;
+grant all privileges on table public.admin_allowlist to service_role;
+grant all privileges on table public.staff_profiles to service_role;
+grant all privileges on table public.audit_logs to service_role;
+grant usage, select on sequence public.audit_logs_id_seq to service_role;
+
 insert into public.organizations (slug, name)
 values ('miter', '米堤爾幼兒園')
 on conflict (slug) do update set name = excluded.name;
