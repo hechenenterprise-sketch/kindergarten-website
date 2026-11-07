@@ -1,6 +1,6 @@
 "use client";
 
-import {Music2, Pause, Play, X} from "lucide-react";
+import {Pause, Play, X} from "lucide-react";
 import {useRef, useState} from "react";
 
 export default function SiteMusicPlayer() {
@@ -40,8 +40,6 @@ export default function SiteMusicPlayer() {
     <button type="button" className="music-play-button" onClick={togglePlayback} aria-label={playing ? "暫停《陪你走過每個今天》" : "播放《陪你走過每個今天》"}>
       {playing ? <Pause size={18} fill="currentColor"/> : <Play size={18} fill="currentColor"/>}
     </button>
-    <Music2 className="music-note-icon" size={17} aria-hidden="true"/>
-    <span className="music-copy"><small>網站音樂</small><strong>陪你走過每個今天</strong></span>
     <button type="button" className="music-close-button" onClick={closePlayer} aria-label="關閉網站音樂播放器"><X size={17}/></button>
   </aside>;
 }
