@@ -109,11 +109,11 @@
 @media(max-width:800px){.back-to-top{width:52px;height:52px}}
 
 /* Compact opt-in music player. Browsers require the visitor to start sound. */
-.site-music-player{position:fixed;left:22px;bottom:22px;z-index:50;display:flex;align-items:center;gap:5px;width:auto;padding:6px;border:1px solid #f0ccd5;border-radius:999px;background:#fffaf4ed;box-shadow:0 9px 28px #8e60782b;backdrop-filter:blur(14px);color:#7f6670}
+.site-music-player{position:fixed;left:22px;bottom:22px;z-index:50;display:flex;width:auto;color:#7f6670}
 .music-play-button,.music-close-button{flex:0 0 auto;border:0;display:grid;place-items:center;cursor:pointer;transition:transform .2s ease,background-color .2s ease,color .2s ease}
-.music-play-button{width:38px;height:38px;border-radius:50%;background:#e9688b;color:white}.music-play-button:hover{background:#d9577b;transform:scale(1.05)}
+.music-play-button{width:34px;height:34px;border-radius:50%;background:#e9688b;color:white;box-shadow:0 7px 20px #8e60782b}.music-play-button:hover{background:#d9577b;transform:scale(1.05)}
 .music-close-button{width:29px;height:29px;border-radius:50%;background:transparent;color:#a47d88}.music-close-button:hover{background:#f8e5e9;color:#c65375;transform:rotate(4deg)}
-@media(max-width:800px){.site-music-player{left:12px;bottom:12px;gap:4px;padding:5px}.music-play-button{width:35px;height:35px}.music-close-button{width:27px;height:27px}}
+@media(max-width:800px){.site-music-player{left:12px;bottom:12px}.music-play-button{width:31px;height:31px}}
 
 /* Gentle interactions that preserve the existing layout. */
 .circle-photo{transition:transform .45s ease,box-shadow .45s ease,filter .45s ease}

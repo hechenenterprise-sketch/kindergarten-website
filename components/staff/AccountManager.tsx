@@ -1,8 +1,6 @@
 "use client";
 
-import Link from "next/link";
 import {FormEvent, useState} from "react";
-import {encryptCredentialFile, type ExportedCredential} from "@/lib/staff/credential-export";
 import {generateNumericPassword} from "@/lib/staff/validation";
 
 export type StaffAccount = {
@@ -13,14 +11,14 @@ export type StaffAccount = {
   role: "director" | "office" | "teacher";
   is_active: boolean;
   last_login_at?: string | null;
+  password?: string | null;
 };
 
 const roleLabels = {director: "主任", office: "行政", teacher: "老師"};
 
 export default function AccountManager({initialAccounts}: {initialAccounts: StaffAccount[]}) {
   const [accounts, setAccounts] = useState(initialAccounts);
-  const [credentials, setCredentials] = useState<ExportedCredential[]>([]);
-  const [exportPassword, setExportPassword] = useState("");
+  const [visiblePasswords, setVisiblePasswords] = useState<string[]>([]);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
@@ -41,10 +39,9 @@ export default function AccountManager({initialAccounts}: {initialAccounts: Staf
       return;
     }
     const account = result.account;
-    setAccounts((current) => [...current, {user_id: account.userId, account_code: account.accountCode, display_name: account.displayName, job_title: account.jobTitle, role: account.role, is_active: true, last_login_at: null}]);
-    setCredentials((current) => [...current, {accountCode: account.accountCode, password: account.password, displayName: account.displayName, jobTitle: account.jobTitle, roleLabel: account.roleLabel, createdAt: new Date().toISOString()}]);
+    setAccounts((current) => [...current, {user_id: account.userId, account_code: account.accountCode, display_name: account.displayName, job_title: account.jobTitle, role: account.role, is_active: true, last_login_at: null, password: account.password}]);
     setForm({accountCode: "", password: "", displayName: "", jobTitle: "", role: "teacher"});
-    setMessage("帳號已建立；初始密碼只會在本頁顯示，請立即加密匯出。智慧型瀏覽器可能會將密碼視為登入資料，請勿儲存在共用電腦。 ");
+    setMessage("帳號已建立，密碼已加密保存；管理員之後仍可在帳號清單中查看。");
     setSaving(false);
   }
 
@@ -53,8 +50,8 @@ export default function AccountManager({initialAccounts}: {initialAccounts: Staf
     const response = await fetch(`/api/staff/accounts/${account.user_id}`, {method: "PATCH", headers: {"Content-Type": "application/json"}, body: JSON.stringify({action: "reset-password", password})});
     const result = await response.json();
     if (!response.ok) { setError(result.error || "無法重設密碼"); return; }
-    setCredentials((current) => [...current, {accountCode: account.account_code, password, displayName: account.display_name, jobTitle: account.job_title, roleLabel: roleLabels[account.role], createdAt: new Date().toISOString()}]);
-    setMessage(`${account.display_name} 的密碼已重設，請立即加密匯出。`);
+    setAccounts((current) => current.map((item) => item.user_id === account.user_id ? {...item, password} : item));
+    setMessage(`${account.display_name} 的密碼已重設並加密保存。`);
   }
 
   async function toggleAccount(account: StaffAccount) {
@@ -66,21 +63,8 @@ export default function AccountManager({initialAccounts}: {initialAccounts: Staf
     setMessage(`${account.display_name} 已${isActive ? "啟用" : "停用"}。`);
   }
 
-  async function downloadEncryptedFile() {
-    if (exportPassword.length < 8) { setError("加密檔案密碼至少需要 8 個字元"); return; }
-    if (!credentials.length) { setError("目前沒有可匯出的新帳密"); return; }
-    try {
-      const encrypted = await encryptCredentialFile(credentials, exportPassword);
-      const url = URL.createObjectURL(new Blob([encrypted], {type: "application/json"}));
-      const anchor = document.createElement("a");
-      anchor.href = url;
-      anchor.download = `miter-staff-credentials-${new Date().toISOString().slice(0, 10)}.miter-accounts`;
-      anchor.click();
-      URL.revokeObjectURL(url);
-      setMessage("加密帳密檔案已下載。確認保存後，可清除本頁的一次性密碼。");
-    } catch {
-      setError("無法產生加密檔案");
-    }
+  function togglePassword(userId: string) {
+    setVisiblePasswords((current) => current.includes(userId) ? current.filter((id) => id !== userId) : [...current, userId]);
   }
 
   return <div className="space-y-7">
@@ -97,16 +81,9 @@ export default function AccountManager({initialAccounts}: {initialAccounts: Staf
       </form>
     </section>
 
-    {credentials.length > 0 && <section className="rounded-3xl border-2 border-amber-200 bg-amber-50 p-6 sm:p-8">
-      <h2 className="text-xl font-bold text-slate-800">一次性帳密（共 {credentials.length} 組）</h2>
-      <div className="mt-4 overflow-x-auto"><table className="w-full min-w-[620px] text-left text-sm"><thead><tr className="text-slate-500"><th className="pb-3">姓名</th><th className="pb-3">職位</th><th className="pb-3">角色</th><th className="pb-3">帳號</th><th className="pb-3">初始密碼</th></tr></thead><tbody>{credentials.map((item, index) => <tr key={`${item.accountCode}-${index}`} className="border-t border-amber-200"><td className="py-3">{item.displayName}</td><td>{item.jobTitle}</td><td>{item.roleLabel}</td><td className="font-mono">{item.accountCode}</td><td className="font-mono font-bold tracking-wider">{item.password}</td></tr>)}</tbody></table></div>
-      <div className="mt-5 flex flex-col gap-3 sm:flex-row"><input type="password" value={exportPassword} onChange={(event) => setExportPassword(event.target.value)} className="h-11 flex-1 rounded-xl border border-amber-300 bg-white px-4" placeholder="設定加密檔案密碼（至少 8 字元）"/><button type="button" onClick={downloadEncryptedFile} className="rounded-xl bg-slate-800 px-5 py-3 text-sm text-white">下載加密帳密檔案</button><button type="button" onClick={() => {setCredentials([]); setExportPassword("");}} className="rounded-xl border border-slate-300 px-5 py-3 text-sm text-slate-600">清除一次性密碼</button></div>
-      <Link href="/staff-admin/decrypt" className="mt-4 inline-block text-sm text-[#df0873] underline">開啟既有加密帳密檔案</Link>
-    </section>}
-
     <section className="rounded-3xl bg-white p-6 shadow-sm sm:p-8">
       <h2 className="text-xl font-bold text-slate-800">現有帳號</h2>
-      <div className="mt-5 space-y-3">{accounts.length ? accounts.map((account) => <article key={account.user_id} className="flex flex-col gap-4 rounded-2xl border border-slate-100 p-4 sm:flex-row sm:items-center sm:justify-between"><div><div className="flex flex-wrap items-center gap-2"><strong className="text-slate-800">{account.display_name}</strong><span className="rounded-full bg-pink-50 px-2.5 py-1 text-xs text-[#df0873]">{roleLabels[account.role]}</span><span className={`rounded-full px-2.5 py-1 text-xs ${account.is_active ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-500"}`}>{account.is_active ? "啟用" : "停用"}</span></div><p className="mt-1 text-sm text-slate-500">{account.job_title}・帳號 {account.account_code}</p></div><div className="flex gap-2"><button type="button" onClick={() => resetPassword(account)} className="rounded-xl border border-pink-200 px-3 py-2 text-xs text-[#df0873]">重設密碼</button><button type="button" onClick={() => toggleAccount(account)} className="rounded-xl border border-slate-200 px-3 py-2 text-xs text-slate-600">{account.is_active ? "停用" : "啟用"}</button></div></article>) : <p className="text-sm text-slate-500">尚未建立主任、行政或老師帳號。</p>}</div>
+      <div className="mt-5 space-y-3">{accounts.length ? accounts.map((account) => <article key={account.user_id} className="flex flex-col gap-4 rounded-2xl border border-slate-100 p-4 sm:flex-row sm:items-center sm:justify-between"><div><div className="flex flex-wrap items-center gap-2"><strong className="text-slate-800">{account.display_name}</strong><span className="rounded-full bg-pink-50 px-2.5 py-1 text-xs text-[#df0873]">{roleLabels[account.role]}</span><span className={`rounded-full px-2.5 py-1 text-xs ${account.is_active ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-500"}`}>{account.is_active ? "啟用" : "停用"}</span></div><p className="mt-1 text-sm text-slate-500">{account.job_title}・帳號 <span className="font-mono">{account.account_code}</span></p><p className="mt-2 text-sm text-slate-600">密碼：<span className="font-mono font-semibold tracking-wider">{account.password ? (visiblePasswords.includes(account.user_id) ? account.password : "••••••••") : "請重設一次"}</span>{account.password && <button type="button" onClick={() => togglePassword(account.user_id)} className="ml-3 text-xs text-[#df0873] underline">{visiblePasswords.includes(account.user_id) ? "隱藏" : "顯示"}</button>}</p></div><div className="flex gap-2"><button type="button" onClick={() => resetPassword(account)} className="rounded-xl border border-pink-200 px-3 py-2 text-xs text-[#df0873]">重設密碼</button><button type="button" onClick={() => toggleAccount(account)} className="rounded-xl border border-slate-200 px-3 py-2 text-xs text-slate-600">{account.is_active ? "停用" : "啟用"}</button></div></article>) : <p className="text-sm text-slate-500">尚未建立主任、行政或老師帳號。</p>}</div>
     </section>
   </div>;
 }

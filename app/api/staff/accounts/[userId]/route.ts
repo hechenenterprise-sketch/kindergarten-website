@@ -3,6 +3,7 @@ import {z} from "zod";
 import {requireStaffOwner} from "@/lib/staff/authorization";
 import {staffPortalConfigured} from "@/lib/staff/config";
 import {staffPasswordSchema} from "@/lib/staff/validation";
+import {encryptStaffPassword} from "@/lib/staff/password-vault";
 
 const updateSchema = z.discriminatedUnion("action", [
   z.object({action: z.literal("reset-password"), password: staffPasswordSchema}),
@@ -30,7 +31,7 @@ export async function PATCH(request: Request, context: {params: Promise<{userId:
   if (parsed.data.action === "reset-password") {
     const {error} = await authorization.service.auth.admin.updateUserById(userId, {password: parsed.data.password});
     if (error) return NextResponse.json({error: "無法重設密碼"}, {status: 500});
-    await authorization.service.from("staff_profiles").update({failed_attempts: 0, locked_until: null}).eq("user_id", userId);
+    await authorization.service.from("staff_profiles").update({password_vault: encryptStaffPassword(parsed.data.password), failed_attempts: 0, locked_until: null}).eq("user_id", userId);
     await authorization.service.from("audit_logs").insert({organization_id: authorization.profile.organization_id, actor_user_id: authorization.user.id, action: "staff.password_reset", target_user_id: userId});
     return NextResponse.json({account: {...target, password: parsed.data.password}});
   }

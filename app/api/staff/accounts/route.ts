@@ -1,6 +1,7 @@
 import {NextResponse} from "next/server";
 import {requireStaffOwner} from "@/lib/staff/authorization";
 import {staffPortalConfigured, staffRoleLabels, type StaffRole} from "@/lib/staff/config";
+import {decryptStaffPassword, encryptStaffPassword} from "@/lib/staff/password-vault";
 import {createStaffSchema} from "@/lib/staff/validation";
 
 export async function GET() {
@@ -10,12 +11,17 @@ export async function GET() {
 
   const {data, error} = await authorization.service
     .from("staff_profiles")
-    .select("user_id, account_code, display_name, job_title, role, is_active, last_login_at, created_at")
+    .select("user_id, account_code, display_name, job_title, role, is_active, last_login_at, created_at, password_vault")
     .eq("organization_id", authorization.profile.organization_id)
     .not("account_code", "is", null)
     .order("created_at");
   if (error) return NextResponse.json({error: "無法讀取帳號"}, {status: 500});
-  return NextResponse.json({accounts: data});
+  return NextResponse.json({
+    accounts: (data || []).map(({password_vault, ...account}) => ({
+      ...account,
+      password: decryptStaffPassword(password_vault),
+    })),
+  });
 }
 
 export async function POST(request: Request) {
@@ -50,6 +56,7 @@ export async function POST(request: Request) {
     organization_id: authorization.profile.organization_id,
     account_code: parsed.data.accountCode,
     login_email: loginEmail,
+    password_vault: encryptStaffPassword(parsed.data.password),
     display_name: parsed.data.displayName,
     job_title: parsed.data.jobTitle,
     role: parsed.data.role,

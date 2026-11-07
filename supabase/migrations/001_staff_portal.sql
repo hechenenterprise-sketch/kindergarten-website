@@ -19,6 +19,7 @@ create table if not exists public.staff_profiles (
   organization_id uuid not null references public.organizations(id) on delete cascade,
   account_code varchar(4),
   login_email text unique,
+  password_vault text,
   display_name text not null,
   job_title text not null,
   role text not null check (role in ('owner', 'director', 'office', 'teacher')),
@@ -31,6 +32,9 @@ create table if not exists public.staff_profiles (
   unique (organization_id, account_code),
   check (account_code is null or account_code ~ '^[A-Z0-9]{4}$')
 );
+
+alter table public.staff_profiles
+add column if not exists password_vault text;
 
 create table if not exists public.audit_logs (
   id bigint generated always as identity primary key,
