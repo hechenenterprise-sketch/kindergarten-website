@@ -3,6 +3,7 @@ import Link from "next/link";
 import {ArrowDown, ArrowUpRight, Mail, Phone, Sprout} from "lucide-react";
 import MobileMenu from "@/components/MobileMenu";
 import BackToTop from "@/components/BackToTop";
+import SiteMusicPlayer from "@/components/SiteMusicPlayer";
 import ViewCounter from "@/components/ViewCounter";
 import Reveal from "@/components/Reveal";
 import FeaturedActivities, {type FeaturedActivityItem} from "@/components/FeaturedActivities";
@@ -97,6 +98,6 @@ export default async function Home() {
       <div className="contact-grid"><Reveal><h2>歡迎預約參觀<span>米堤爾幼兒園</span></h2><p className="contact-description">{contact?.description || "歡迎家長來電或透過 LINE 與我們聯絡，了解招生資訊、課程內容與可預約參觀的時段。"}</p><dl className="contact-details"><div><dt>聯絡電話</dt><dd>{contact?.phone ? <a href={`tel:${contact.phone}`}>{contact.phone}</a> : "歡迎聯絡園所洽詢"}</dd></div><div><dt>電子信箱</dt><dd><a href={`mailto:${contact?.email || "miterschool@yahoo.com.tw"}`}>{contact?.email || "miterschool@yahoo.com.tw"}</a></dd></div><div><dt>園所地址</dt><dd>{contact?.address || "歡迎聯絡園所洽詢"}</dd></div><div><dt>服務時間</dt><dd>{contact?.serviceHours || "週一至週五 08:00～17:30"}</dd></div></dl><div className="contact-actions">{contact?.phone && <a className="contact-icon phone-icon" href={`tel:${contact.phone}`} aria-label="電話諮詢" title="電話諮詢"><Phone size={21} aria-hidden="true"/></a>}{contact?.lineUrl && <a className="outline-button" href={contact.lineUrl} target="_blank" rel="noopener noreferrer">LINE 聯絡<ArrowUpRight size={16}/></a>}{contact?.facebookUrl && <a className="contact-icon facebook-icon" href={contact.facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M13.5 8.5V6.75c0-.84.56-1.04.96-1.04h2.44V2.1L13.54 2C9.85 2 9 4.76 9 6.52V8.5H6v4h3V22h4.5v-9.5h3l.4-4h-3.4Z"/></svg></a>}<a className="contact-icon email-icon" href={`mailto:${contact?.email || "miterschool@yahoo.com.tw"}`} aria-label="寄送電子郵件" title="寄送電子郵件"><Mail size={21} aria-hidden="true"/></a></div></Reveal>
         <Reveal className="map-panel">{contact?.googleMapEmbedUrl ? <iframe src={contact.googleMapEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="米堤爾幼兒園 Google 地圖"/> : <div className="map-placeholder"><Sprout size={45} strokeWidth={1}/><p>期待與你相見</p><span>歡迎聯絡園所預約參觀</span></div>}</Reveal></div>
     </section>
-    <footer className="miter-footer"><div className="page-width"><Link href="/" aria-label="米堤爾幼兒園首頁"><Image src="/miter-logo.png" alt="米堤爾幼兒園" width={150} height={90}/></Link><div><p>© 2026 米堤爾幼兒園｜Website by HECHEN DIGITAL</p><small>{publicSiteConfig.informationNotice}</small></div></div></footer><BackToTop/>
+    <footer className="miter-footer"><div className="page-width"><Link href="/" aria-label="米堤爾幼兒園首頁"><Image src="/miter-logo.png" alt="米堤爾幼兒園" width={150} height={90}/></Link><div><p>© 2026 米堤爾幼兒園｜Website by HECHEN DIGITAL</p><small>{publicSiteConfig.informationNotice}</small></div></div></footer><SiteMusicPlayer/><BackToTop/>
   </main>;
 }
