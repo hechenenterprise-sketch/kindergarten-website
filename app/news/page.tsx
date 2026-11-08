@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {notFound} from "next/navigation";
 
-import {client} from "@/sanity/lib/client";
+import {fetchFresh} from "@/sanity/lib/fetch";
 import {allNewsQuery} from "@/sanity/lib/queries";
 import {urlFor} from "@/sanity/lib/image";
 import NewsCategoryBadge, {
@@ -21,13 +21,14 @@ type NewsItem = {
   coverImage?: unknown;
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function NewsListPage() {
   if (!publicSiteConfig.showNews) {
     notFound();
   }
 
-  const newsItems = await client
-    .fetch<NewsItem[]>(allNewsQuery)
+  const newsItems = await fetchFresh<NewsItem[]>(allNewsQuery)
     .catch(() => []);
 
   return (

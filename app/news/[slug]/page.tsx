@@ -5,8 +5,9 @@ import {
   PortableText,
   type PortableTextComponents,
 } from "@portabletext/react";
+import type {PortableTextBlock} from "@portabletext/types";
 
-import {client} from "@/sanity/lib/client";
+import {fetchFresh} from "@/sanity/lib/fetch";
 import {newsBySlugQuery} from "@/sanity/lib/queries";
 import {urlFor} from "@/sanity/lib/image";
 import NewsCategoryBadge from "@/components/NewsCategoryBadge";
@@ -17,6 +18,17 @@ type Props = {
     slug: string;
   }>;
 };
+
+type NewsDetail = {
+  title: string;
+  category?: "school" | "government" | "activity";
+  publishedAt?: string;
+  summary?: string;
+  coverImage?: Parameters<typeof urlFor>[0];
+  content?: PortableTextBlock[];
+};
+
+export const dynamic = "force-dynamic";
 
 const portableTextComponents: PortableTextComponents = {
   types: {
@@ -59,7 +71,7 @@ export default async function NewsPage({params}: Props) {
 
   const {slug} = await params;
 
-  const news = await client.fetch(newsBySlugQuery, {slug});
+  const news = await fetchFresh<NewsDetail | null>(newsBySlugQuery, {slug});
 
   if (!news) {
     notFound();

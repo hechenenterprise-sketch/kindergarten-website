@@ -10,7 +10,7 @@ import FeaturedActivities, {type FeaturedActivityItem} from "@/components/Featur
 import {NewsSection, GallerySection, TeachersSection} from "@/components/DeferredSections";
 import {siteNavigation} from "@/lib/site-navigation";
 import {publicSiteConfig} from "@/lib/site-mode";
-import {client} from "@/sanity/lib/client";
+import {fetchFresh} from "@/sanity/lib/fetch";
 import {aboutSettingsQuery, brochureQuery, contactSettingsQuery, coursesQuery, featuredActivitiesQuery, homeSettingsQuery} from "@/sanity/lib/queries";
 import {urlFor} from "@/sanity/lib/image";
 import {GardenSprig, GardenSun, SakuraBlossom, SakuraBranch, StoryCurve} from "@/components/GardenDecor";
@@ -40,12 +40,12 @@ function CirclePhoto({image, alt, className = "", priority = false}: {image?: Sa
 export default async function Home() {
   // Hidden collections never enter the public page payload.
   const [home, about, courses, featuredActivities, contact, brochure] = await Promise.all([
-    client.fetch<HomeSettings | null>(homeSettingsQuery).catch(() => null),
-    client.fetch<AboutSettings | null>(aboutSettingsQuery).catch(() => null),
-    client.fetch<Course[]>(coursesQuery).catch(() => []),
-    client.fetch<FeaturedActivity[]>(featuredActivitiesQuery).catch(() => []),
-    client.fetch<Contact | null>(contactSettingsQuery).catch(() => null),
-    client.fetch<Brochure | null>(brochureQuery).catch(() => null),
+    fetchFresh<HomeSettings | null>(homeSettingsQuery).catch(() => null),
+    fetchFresh<AboutSettings | null>(aboutSettingsQuery).catch(() => null),
+    fetchFresh<Course[]>(coursesQuery).catch(() => []),
+    fetchFresh<FeaturedActivity[]>(featuredActivitiesQuery).catch(() => []),
+    fetchFresh<Contact | null>(contactSettingsQuery).catch(() => null),
+    fetchFresh<Brochure | null>(brochureQuery).catch(() => null),
   ]);
   const activityCards: FeaturedActivityItem[] = featuredActivities.flatMap((activity) => activity.image ? [{id: activity._id, imageUrl: urlFor(activity.image).width(1400).auto("format").url(), title: activity.title, description: activity.description || "記錄孩子在體驗中探索、學習與成長的每一刻。"}] : []);
   if (!activityCards.length) activityCards.push({id: "mobile-library", imageUrl: "/images/mobile-library.jpg", title: "閱讀探索｜行動圖書車", description: "透過行動圖書車與多元繪本閱讀，引導孩子親近書本，在故事中培養想像力、表達力與閱讀興趣。"});

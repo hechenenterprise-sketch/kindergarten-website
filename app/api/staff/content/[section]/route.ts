@@ -56,7 +56,9 @@ export async function POST(request: Request, context: {params: Promise<{section:
   const formData = await request.formData();
   const sanity = createStaffSanityClient();
   const requestedId = text(formData, "id");
-  const documentId = requestedId || `${section}.${crypto.randomUUID()}`;
+  // Public Sanity documents must use a plain ID. Dot-separated IDs are treated
+  // as namespaced/private and are not returned to the anonymous public client.
+  const documentId = requestedId || crypto.randomUUID();
   let payload: StaffContentPayload;
 
   if (section === "photos") {
