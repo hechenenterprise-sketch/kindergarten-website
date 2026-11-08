@@ -2,9 +2,9 @@ export const isFullPreview = process.env.NEXT_PUBLIC_MITER_FULL_PREVIEW === "tru
   (process.env.NODE_ENV === "development" || process.env.NEXT_PUBLIC_MITER_PREVIEW_TARGET === "preview");
 
 export const publicSiteConfig = {
-  showNews: isFullPreview,
-  showGallery: isFullPreview,
-  showTeachers: isFullPreview,
+  showNews: true,
+  showGallery: true,
+  showTeachers: true,
   // 園務登入是園方日常管理入口，正式形象網站也必須保留。
   showAdminLogin: true,
   informationNotice:
