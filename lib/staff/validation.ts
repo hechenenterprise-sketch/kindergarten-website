@@ -16,7 +16,7 @@ export const createStaffSchema = z.object({
   password: staffPasswordSchema,
   displayName: z.string().trim().min(1, "請輸入使用者名字").max(50),
   jobTitle: z.string().trim().min(1, "請輸入職位").max(50),
-  role: z.enum(staffRoles),
+  role: z.enum(staffRoles).refine((role) => role !== "owner", "不能建立最高管理員帳號"),
 });
 
 export const staffLoginSchema = z.object({
