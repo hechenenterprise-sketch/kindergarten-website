@@ -34,3 +34,4 @@
 .experience-note{background:#f1f2e6}.miter-footer{background:var(--cream)}
 @media(max-width:800px){.miter-site .hero-small-photo{width:115px;right:4%;bottom:35px}.art-caption{bottom:8px;font-size:14px}.art-caption em{font-size:12px}.orb-yellow{width:34px;height:34px}.orb-green{width:19px;height:19px}.sparkle{font-size:23px}}
 @media(max-width:380px){.miter-site .hero-small-photo{width:100px;bottom:30px}}
+.contact-details .approval-item{font-size:11px;color:#817970}.contact-details .approval-item dt{color:#aa9090}

@@ -98,6 +98,8 @@ export const contactSettingsQuery = `
   phone,
   email,
   serviceHours,
+  approvalNumber,
+  capacityApprovalNumber,
   lineUrl,
   facebookUrl,
   googleMapEmbedUrl,

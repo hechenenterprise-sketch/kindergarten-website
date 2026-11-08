@@ -34,6 +34,20 @@ export const contactSettings = defineType({
     }),
 
     defineField({
+      name: "approvalNumber",
+      title: "核准文號",
+      type: "string",
+      initialValue: "府社幼字第0960101520號",
+    }),
+
+    defineField({
+      name: "capacityApprovalNumber",
+      title: "核准人數文號",
+      type: "string",
+      initialValue: "府教幼字第1030036563號",
+    }),
+
+    defineField({
       name: "lineUrl",
       title: "LINE 連結",
       type: "url",
