@@ -1,6 +1,7 @@
 import {createStaffServerClient, createStaffServiceClient} from "@/lib/supabase/server";
+import type {StaffRole} from "@/lib/staff/config";
 
-export async function requireStaffOwner() {
+export async function requireStaffRoles(allowedRoles: StaffRole[]) {
   const supabase = await createStaffServerClient();
   const {data: {user}} = await supabase.auth.getUser();
   if (!user) return null;
@@ -12,6 +13,10 @@ export async function requireStaffOwner() {
     .eq("user_id", user.id)
     .maybeSingle();
 
-  if (!profile?.is_active || profile.role !== "owner") return null;
-  return {user, profile, service};
+  if (!profile?.is_active || !allowedRoles.includes(profile.role as StaffRole)) return null;
+  return {user, profile: {...profile, role: profile.role as StaffRole}, service};
+}
+
+export async function requireStaffOwner() {
+  return requireStaffRoles(["owner"]);
 }

@@ -22,7 +22,7 @@ create table if not exists public.staff_profiles (
   password_vault text,
   display_name text not null,
   job_title text not null,
-  role text not null check (role in ('owner', 'director', 'office', 'teacher')),
+  role text not null check (role in ('owner', 'principal', 'director', 'office', 'teacher')),
   is_active boolean not null default true,
   failed_attempts integer not null default 0,
   locked_until timestamptz,
@@ -35,6 +35,12 @@ create table if not exists public.staff_profiles (
 
 alter table public.staff_profiles
 add column if not exists password_vault text;
+
+alter table public.staff_profiles
+drop constraint if exists staff_profiles_role_check;
+alter table public.staff_profiles
+add constraint staff_profiles_role_check
+check (role in ('owner', 'principal', 'director', 'office', 'teacher'));
 
 create table if not exists public.audit_logs (
   id bigint generated always as identity primary key,

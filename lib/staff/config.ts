@@ -7,11 +7,12 @@ export const staffPortalConfigured = Boolean(
 export const staffOrganizationSlug =
   process.env.STAFF_ORGANIZATION_SLUG || "miter";
 
-export const staffRoles = ["owner", "director", "office", "teacher"] as const;
+export const staffRoles = ["owner", "principal", "director", "office", "teacher"] as const;
 export type StaffRole = (typeof staffRoles)[number];
 
 export const staffRoleLabels: Record<StaffRole, string> = {
   owner: "管理員",
+  principal: "園長",
   director: "主任",
   office: "行政",
   teacher: "老師",
@@ -19,7 +20,8 @@ export const staffRoleLabels: Record<StaffRole, string> = {
 
 export const roleCapabilities: Record<StaffRole, string[]> = {
   owner: ["帳號管理", "招生簡章", "最新消息", "活動與相簿", "審核與發布"],
-  director: ["招生簡章", "最新消息", "活動與相簿", "審核與發布"],
+  principal: ["網站照片", "招生簡章", "最新消息", "活動與相簿", "審核與發布"],
+  director: ["招生簡章", "最新消息", "活動與相簿", "送交園長審核"],
   office: ["最新消息", "活動與相簿", "內容整理"],
   teacher: ["提供活動素材", "上傳照片", "查看自己的處理狀態"],
 };

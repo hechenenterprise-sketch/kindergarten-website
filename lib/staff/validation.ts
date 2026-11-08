@@ -9,7 +9,7 @@ export const accountCodeSchema = z
 
 export const staffPasswordSchema = z
   .string()
-  .regex(/^\d{8}$/, "密碼必須是 8 碼數字");
+  .regex(/^\d{6}$/, "密碼必須是 6 碼數字");
 
 export const createStaffSchema = z.object({
   accountCode: accountCodeSchema,
@@ -27,5 +27,5 @@ export const staffLoginSchema = z.object({
 export function generateNumericPassword() {
   const bytes = new Uint32Array(1);
   crypto.getRandomValues(bytes);
-  return String(bytes[0] % 100_000_000).padStart(8, "0");
+  return String(bytes[0] % 1_000_000).padStart(6, "0");
 }
