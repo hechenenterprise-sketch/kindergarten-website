@@ -26,26 +26,51 @@ export async function GET(_request: Request, context: {params: Promise<{section:
   const {section} = await context.params;
   const authorization = await authorize(section);
   if (!authorization) return NextResponse.json({error: "沒有權限"}, {status: 403});
+  const canDelete = authorization.profile.role === "owner" || authorization.profile.role === "principal";
 
   const sanity = createStaffSanityClient();
   if (section === "news") {
     const items = await sanity.fetch(`*[_type == "news"] | order(publishedAt desc){_id,title,category,summary,"content":pt::text(content),publishedAt}`);
-    return NextResponse.json({items});
+    return NextResponse.json({items, canDelete});
   }
   if (section === "gallery") {
     const items = await sanity.fetch(`*[_type == "gallery"] | order(order asc, _createdAt desc){_id,title,description,order,"imageUrl":image.asset->url}`);
-    return NextResponse.json({items});
+    return NextResponse.json({items, canDelete});
   }
   if (section === "photos") {
     const item = await sanity.fetch(`{
       "home": *[_type == "homeSettings"][0]{_id,"heroImageUrl":heroImage.asset->url,"heroSecondaryImageUrl":heroSecondaryImage.asset->url,"heroTertiaryImageUrl":heroTertiaryImage.asset->url},
       "about": *[_type == "aboutSettings"][0]{_id,"imageUrl":image.asset->url,"detailImageUrl":detailImage.asset->url}
     }`);
-    return NextResponse.json({item});
+    return NextResponse.json({item, canDelete: false});
   }
 
   const item = await sanity.fetch(`*[_type == "brochure"] | order(_updatedAt desc)[0]{_id,title,publish,"fileName":pdf.asset->originalFilename,"pdfUrl":pdf.asset->url}`);
-  return NextResponse.json({item});
+  return NextResponse.json({item, canDelete});
+}
+
+export async function DELETE(request: Request, context: {params: Promise<{section: string}>}) {
+  const {section} = await context.params;
+  if (!(["news", "gallery", "brochure"] as string[]).includes(section)) {
+    return NextResponse.json({error: "此內容不能刪除"}, {status: 400});
+  }
+  const authorization = await requireStaffRoles(["owner", "principal"]);
+  if (!authorization) return NextResponse.json({error: "只有園長或最高管理員可以刪除"}, {status: 403});
+
+  const id = new URL(request.url).searchParams.get("id")?.trim();
+  if (!id) return NextResponse.json({error: "缺少內容編號"}, {status: 400});
+  const sanity = createStaffSanityClient();
+  const target = await sanity.fetch(`*[_id == $id && _type == $type][0]{_id,title}`, {id, type: section});
+  if (!target) return NextResponse.json({error: "找不到內容"}, {status: 404});
+
+  await sanity.delete(id);
+  await authorization.service.from("audit_logs").insert({
+    organization_id: authorization.profile.organization_id,
+    actor_user_id: authorization.user.id,
+    action: `staff.content_deleted.${section}`,
+    metadata: {document_id: id, title: target.title || ""},
+  });
+  return NextResponse.json({success: true});
 }
 
 export async function POST(request: Request, context: {params: Promise<{section: string}>}) {

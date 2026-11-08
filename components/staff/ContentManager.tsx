@@ -30,6 +30,8 @@ export default function ContentManager({section}: {section: Section}) {
   const [editing, setEditing] = useState<ContentItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [deletingId, setDeletingId] = useState("");
+  const [canDelete, setCanDelete] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [formKey, setFormKey] = useState(0);
@@ -42,6 +44,7 @@ export default function ContentManager({section}: {section: Section}) {
     else {
       setItems(result.items || []);
       setBrochure(result.item || null);
+      setCanDelete(Boolean(result.canDelete));
       if (section === "photos") setPhotos(result.item || {});
     }
     setLoading(false);
@@ -55,6 +58,22 @@ export default function ContentManager({section}: {section: Section}) {
     setError("");
     setFormKey((key) => key + 1);
     window.scrollTo({top: 0, behavior: "smooth"});
+  }
+
+  async function deleteContent(item: ContentItem) {
+    if (!window.confirm(`確定要永久刪除「${item.title || "此內容"}」嗎？刪除後無法恢復。`)) return;
+    setDeletingId(item._id);
+    setMessage("");
+    setError("");
+    const response = await fetch(`/api/staff/content/${section}?id=${encodeURIComponent(item._id)}`, {method: "DELETE"});
+    const result = await response.json();
+    if (!response.ok) setError(result.error || "無法刪除內容");
+    else {
+      setMessage("內容已永久刪除，前台將不再顯示。");
+      if (editing?._id === item._id) setEditing(null);
+      await loadItems();
+    }
+    setDeletingId("");
   }
 
   async function save(event: FormEvent<HTMLFormElement>) {
@@ -128,7 +147,7 @@ export default function ContentManager({section}: {section: Section}) {
         </>}
 
         {section === "brochure" && <>
-          {brochure?.pdfUrl && <a href={brochure.pdfUrl} target="_blank" rel="noreferrer" className="text-sm text-[#df0873] underline">查看目前簡章{brochure.fileName ? `：${brochure.fileName}` : ""}</a>}
+          {brochure?.pdfUrl && <div className="flex flex-wrap items-center justify-between gap-3"><a href={brochure.pdfUrl} target="_blank" rel="noreferrer" className="text-sm text-[#df0873] underline">查看目前簡章{brochure.fileName ? `：${brochure.fileName}` : ""}</a>{canDelete && <button type="button" disabled={deletingId === brochure._id} onClick={() => void deleteContent(brochure)} className="rounded-xl border border-red-200 px-4 py-2 text-sm text-red-600 disabled:opacity-50">{deletingId === brochure._id ? "刪除中…" : "刪除簡章"}</button>}</div>}
           <label className="text-sm text-slate-600">PDF 檔案{brochure && "（未選擇會保留原檔）"}<input name="file" type="file" accept="application/pdf,.pdf" required={!brochure} className="mt-2 block w-full rounded-xl border border-slate-200 p-3 text-sm"/></label>
           <label className="flex items-center gap-3 text-sm text-slate-600"><input name="publish" type="checkbox" value="true" defaultChecked={brochure?.publish ?? true} className="h-5 w-5 accent-[#df0873]"/>顯示於網站</label>
         </>}
@@ -139,7 +158,7 @@ export default function ContentManager({section}: {section: Section}) {
 
     {section !== "brochure" && <section className="rounded-3xl bg-white p-6 shadow-sm sm:p-8">
       <h2 className="text-xl font-bold text-slate-800">現有內容</h2>
-      {loading ? <p className="mt-5 text-sm text-slate-500">載入中…</p> : items.length ? <div className="mt-5 space-y-3">{items.map((item) => <article key={item._id} className="flex flex-col gap-4 rounded-2xl border border-slate-100 p-4 sm:flex-row sm:items-center sm:justify-between"><div className="flex min-w-0 items-center gap-4">{item.imageUrl && <img src={item.imageUrl} alt="" className="h-16 w-16 flex-none rounded-xl object-cover"/>}<div className="min-w-0"><h3 className="font-semibold text-slate-800">{item.title}</h3><p className="mt-1 line-clamp-2 text-sm text-slate-500">{section === "news" ? `${categoryLabels[item.category || "school"]}・${item.summary || "尚未填寫摘要"}` : item.description || "尚未填寫介紹"}</p></div></div><button type="button" onClick={() => startEditing(item)} className="rounded-xl border border-pink-200 px-4 py-2 text-sm text-[#df0873]">修改</button></article>)}</div> : <p className="mt-5 text-sm text-slate-500">目前沒有內容。</p>}
+      {loading ? <p className="mt-5 text-sm text-slate-500">載入中…</p> : items.length ? <div className="mt-5 space-y-3">{items.map((item) => <article key={item._id} className="flex flex-col gap-4 rounded-2xl border border-slate-100 p-4 sm:flex-row sm:items-center sm:justify-between"><div className="flex min-w-0 items-center gap-4">{item.imageUrl && <img src={item.imageUrl} alt="" className="h-16 w-16 flex-none rounded-xl object-cover"/>}<div className="min-w-0"><h3 className="font-semibold text-slate-800">{item.title}</h3><p className="mt-1 line-clamp-2 text-sm text-slate-500">{section === "news" ? `${categoryLabels[item.category || "school"]}・${item.summary || "尚未填寫摘要"}` : item.description || "尚未填寫介紹"}</p></div></div><div className="flex gap-2"><button type="button" onClick={() => startEditing(item)} className="rounded-xl border border-pink-200 px-4 py-2 text-sm text-[#df0873]">修改</button>{canDelete && <button type="button" disabled={deletingId === item._id} onClick={() => void deleteContent(item)} className="rounded-xl border border-red-200 px-4 py-2 text-sm text-red-600 disabled:opacity-50">{deletingId === item._id ? "刪除中…" : "刪除"}</button>}</div></article>)}</div> : <p className="mt-5 text-sm text-slate-500">目前沒有內容。</p>}
     </section>}
   </div>;
 }
