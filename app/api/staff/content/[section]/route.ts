@@ -87,8 +87,8 @@ export async function POST(request: Request, context: {params: Promise<{section:
   let payload: StaffContentPayload;
 
   if (section === "photos") {
-    const homeId = text(formData, "homeId") || "homeSettings.staff-managed";
-    const aboutId = text(formData, "aboutId") || "aboutSettings.staff-managed";
+    const homeId = text(formData, "homeId") || crypto.randomUUID();
+    const aboutId = text(formData, "aboutId") || crypto.randomUUID();
     const homeFields = ["heroImage", "heroSecondaryImage", "heroTertiaryImage"] as const;
     const aboutFields = ["image", "detailImage"] as const;
     await sanity.createIfNotExists({_id: homeId, _type: "homeSettings"});
